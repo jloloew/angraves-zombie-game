@@ -1,3 +1,4 @@
+package JavaGame;
 //Laldlalalalala hello
 public class TestClass {
 	
