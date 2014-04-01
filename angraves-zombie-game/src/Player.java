@@ -2,17 +2,16 @@
  * @author jloew2
  */
 
-public class Player {
+@SuppressWarnings("serial")
+public class Player extends Drawable {
 	
-	private Location	location;
-	private double		direction;	// in degrees, 0 is north
+	// Location loc from Drawable
 	private double		health;
 	private Weapon		weapon;
 	private boolean		isShooting;
 	
 	public Player() {
-		location = new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2);
-		direction = 0.0;
+		super(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, "Player.png");
 		weapon = new Weapon();
 		health = 100.0;
 		isShooting = false;
@@ -27,15 +26,7 @@ public class Player {
 	}
 	
 	public void move(int dx, int dy) {
-		location.move(dx, dy);
-	}
-	
-	public Location getLocation() {
-		return location;
-	}
-	
-	public double getDirection() {
-		return direction;
+		loc.move(dx, dy);
 	}
 	
 	public double getHealth() {
@@ -48,16 +39,6 @@ public class Player {
 	
 	public boolean isShooting() {
 		return isShooting;
-	}
-	
-	public void setLocation(Location loc) {
-		location = loc;
-	}
-	
-	public void setDirection(double d) {
-		direction = d % 360;
-		if (direction < 0)
-			direction += 360;
 	}
 	
 	public void setHealth(double d) {
