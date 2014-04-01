@@ -15,13 +15,15 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Drawable extends JComponent {
 	
+	private static final String IMAGE_NAME = "Drawable.png";
+	
 	protected Location		loc;
 	protected double		speed	= 0.0;
 	protected String		description;
 	protected BufferedImage	image;
 	
 	public Drawable(Location location) {
-		this(location, "Drawable");
+		this(location, IMAGE_NAME);
 	}
 	
 	public Drawable(Location location, String imageFileName) {

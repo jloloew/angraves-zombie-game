@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Zombie extends Drawable {
 	
+	private static final String IMAGE_NAME = "Zombie.png";
+	
 	/*
 	 * Inherits: Location loc double speed
 	 */
@@ -16,7 +18,7 @@ public class Zombie extends Drawable {
 	private double		attack;
 	
 	public Zombie(Drawable target) {
-		super(new Location(), "Zombie.png");
+		super(new Location(), IMAGE_NAME);
 		description = "Zombie";
 		this.target = target;
 		// Start on a random edge

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Bullet extends Drawable {
 	
+	private static final String IMAGE_NAME = "Bullet.png";
+	
 	protected double damage;
 	private static ArrayList<Zombie> zombies;
 	

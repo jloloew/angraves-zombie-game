@@ -5,6 +5,8 @@
 @SuppressWarnings("serial")
 public class Player extends Drawable {
 	
+	private static final String IMAGE_NAME = "Angrave.png";
+	
 	/*
 	 * From Drawable: Location loc double speed
 	 */
@@ -14,7 +16,7 @@ public class Player extends Drawable {
 	private boolean	isShooting;
 	
 	public Player() {
-		super(new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, 0.0), "Player.png");
+		super(new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, 0.0), IMAGE_NAME);
 		description = "Player";
 		speed = 0.0;
 		weapon = new Weapon();
