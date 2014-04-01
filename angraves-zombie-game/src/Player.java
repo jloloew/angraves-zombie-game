@@ -14,7 +14,8 @@ public class Player extends Drawable {
 	private boolean	isShooting;
 	
 	public Player() {
-		super(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, "Player.png");
+		super(new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, 0.0), "Player.png");
+		description = "Player";
 		speed = 0.0;
 		weapon = new Weapon();
 		health = 100.0;

@@ -16,6 +16,10 @@ public class Location {
 		this.setDirection(d);
 	}
 	
+	public Location() {
+		this(0, 0, 0.0);
+	}
+	
 	public int getX() {
 		return x;
 	}

@@ -17,14 +17,24 @@ public class Drawable extends JComponent {
 	
 	protected Location		loc;
 	protected double		speed	= 0.0;
-	private String			description;
-	private BufferedImage	image;
+	protected String		description;
+	protected BufferedImage	image;
 	
-	public Drawable(int x, int y, String imageFileName) {
-		this.loc = new Location(x, y, 0.0);
-		this.description = "DefaultType";
+	public Drawable(Location location) {
+		this(location, "Drawable");
+	}
+	
+	public Drawable(Location location, String imageFileName) {
+		this.loc = location;
+		if(this.loc == null)
+			this.loc = new Location(0, 0, 0.0);
+		this.description = "Drawable";
 		image = null;
 		setImage(imageFileName);
+	}
+	
+	public Drawable(int x, int y) {
+		this(new Location(x, y, 0.0));
 	}
 	
 	public void draw(JFrame frame) {

@@ -16,7 +16,8 @@ public class Zombie extends Drawable {
 	private double		attack;
 	
 	public Zombie(Drawable target) {
-		super(0, 0, "Zombie.png");
+		super(new Location(), "Zombie.png");
+		description = "Zombie";
 		this.target = target;
 		// Start on a random edge
 		if (Math.random() >= 0.5) {

@@ -96,13 +96,19 @@ public class Game extends JFrame {
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
-		Player player = new Player();
+		Game game = new Game();
 		ArrayList<Zombie> zombies = new ArrayList<>(50);
 		for (int i = 0; i < zombies.size(); i++) {
-			zombies.set(i, new Zombie());
+			zombies.set(i, new Zombie(game.getPlayer1()));
 		}// for
 		boolean gameIsRunning = true;
 		while (gameIsRunning) {
+			
+			for(int i = 0; i < game.getDrawables().size(); i++) {
+				Drawable dbl = game.getDrawables().get(i);
+				dbl.move();	// Update positions
+				dbl.draw(game);
+			}// for
 			// Update positions
 			
 			// Update game state
@@ -113,5 +119,30 @@ public class Game extends JFrame {
 			Thread.sleep(90);
 		}// while
 	}// main
+	
+	public Drawable getPlayer1() {
+		return player1;
+	}
+	
+	public ArrayList<Drawable> getDrawables() {
+		return drawables;
+	}
+	
+	public void addDrawable(Drawable d) {
+		drawables.add(d);
+	}
+	
+	public boolean removeDrawable(Drawable d) {
+		return drawables.remove(d);
+	}
+	
+	public ArrayList<Location> getZombieLocations() {
+		ArrayList<Location> locs = new ArrayList<>(0);
+		for(Drawable d : drawables) {
+			if(d instanceof Zombie)
+				locs.add(d.getLoc());
+		}
+		return locs;
+	}
 	
 }// Game class

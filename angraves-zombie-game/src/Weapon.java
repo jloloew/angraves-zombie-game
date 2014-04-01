@@ -4,10 +4,11 @@
 
 public class Weapon {
 	
-	private int		ammo;			// how many more bullets you can shoot
-	private double	rateOfFire;	// bullets per second
-	private double	bulletDamage;	// damage done by each bullet
-									
+	private int			ammo;			// how many more bullets you can shoot
+	private double		rateOfFire;	// bullets per second
+	private double		bulletDamage;	// damage done by each bullet
+	protected Player	player;		// the player holding the weapon
+										
 	public Weapon() {
 		ammo = 500;
 		rateOfFire = 2.5;
@@ -15,12 +16,12 @@ public class Weapon {
 	}
 	
 	// Return true if we can shoot
-	public boolean shoot() {
+	public Bullet shoot() {
 		if (ammo > 0) {
 			ammo--;
-			return true;
+			return new Bullet(player.getLoc(), bulletDamage);
 		}
-		return false;
+		return null;
 	}
 	
 	public void addAmmo(int howManyMore) {
