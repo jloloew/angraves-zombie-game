@@ -5,13 +5,17 @@
 @SuppressWarnings("serial")
 public class Player extends Drawable {
 	
-	// Location loc from Drawable
-	private double		health;
-	private Weapon		weapon;
-	private boolean		isShooting;
+	/*
+	 * From Drawable: Location loc double speed
+	 */
+	private double	maxSpeed	= 3.0;
+	private double	health;
+	private Weapon	weapon;
+	private boolean	isShooting;
 	
 	public Player() {
 		super(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, "Player.png");
+		speed = 0.0;
 		weapon = new Weapon();
 		health = 100.0;
 		isShooting = false;
@@ -51,5 +55,20 @@ public class Player extends Drawable {
 	
 	public void setIsShooting(boolean b) {
 		isShooting = b;
+	}
+	
+	public void setSpeed(double speed) {
+		if (speed > maxSpeed)
+			super.setSpeed(maxSpeed);
+		else
+			super.setSpeed(speed);
+	}
+	
+	public double getMaxSpeed() {
+		return maxSpeed;
+	}
+	
+	public void setMaxSpeed(double maxSpeed) {
+		this.maxSpeed = maxSpeed;
 	}
 }

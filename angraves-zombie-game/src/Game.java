@@ -16,14 +16,13 @@ import JavaGame.Game.AL;
 @SuppressWarnings("serial")
 public class Game extends JFrame {
 	
-	public static final int	GAME_WIDTH	= 640, GAME_HEIGHT = 480;
-	private ArrayList<Drawable> drawables;
-	private Drawable player1;
+	public static final int		GAME_WIDTH	= 640, GAME_HEIGHT = 480;
+	private ArrayList<Drawable>	drawables;
+	private Drawable			player1;
 	
-	
-	int x, y;
-	private Image dbImage;
-	private Graphics dbg;
+	int							x, y;
+	private Image				dbImage;
+	private Graphics			dbg;
 	
 	public class AL extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
@@ -57,9 +56,9 @@ public class Game extends JFrame {
 				}
 			}
 		}
-
+		
 		public void keyReleased(KeyEvent e) {
-
+			
 		}
 	}
 	
@@ -70,14 +69,15 @@ public class Game extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		setBackground(Color.BLUE);
-
+		
 		x = 400;
 		y = 300;
 		
-		
 		this.drawables = new ArrayList<Drawable>();
-		this.player1 = new Drawable(GAME_WIDTH / 2, GAME_HEIGHT / 2, "Player1.png");
-		this.player1.draw(this);	// This line must go AFTER the JFrame is initialized
+		this.player1 = new Drawable(GAME_WIDTH / 2, GAME_HEIGHT / 2,
+				"Player1.png");
+		this.player1.draw(this);	// This line must go AFTER the JFrame is
+									// initialized
 		this.drawables.add(this.player1);
 	}
 	
@@ -87,7 +87,7 @@ public class Game extends JFrame {
 		paintComponent(dbg);
 		g.drawImage(dbImage, 0, 0, this);
 	}
-
+	
 	public void paintComponent(Graphics g) {
 		
 		g.setColor(Color.GREEN);

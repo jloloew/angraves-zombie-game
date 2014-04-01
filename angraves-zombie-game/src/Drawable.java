@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 public class Drawable extends JComponent {
 	
 	protected Location		loc;
+	protected double		speed	= 0.0;
 	private String			description;
 	private BufferedImage	image;
 	
@@ -33,6 +34,10 @@ public class Drawable extends JComponent {
 			Graphics g = image.getGraphics();
 			g.drawImage(image, loc.x(), loc.y(), frame);
 		}
+	}
+	
+	public void move() {
+		loc.move(speed);
 	}
 	
 	public void setImage(String fileName) {
@@ -73,6 +78,14 @@ public class Drawable extends JComponent {
 	
 	public void setDescription(String s) {
 		description = s;
+	}
+	
+	public double getSpeed() {
+		return speed;
+	}
+	
+	public void setSpeed(double speed) {
+		this.speed = speed;
 	}
 	
 }
