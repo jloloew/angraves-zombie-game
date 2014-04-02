@@ -15,12 +15,16 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Drawable extends JComponent {
 	
-	private static final String IMAGE_NAME = "Drawable.png";
+	protected Game				game;
 	
-	protected Location		loc;
-	protected double		speed	= 0.0;
-	protected String		description;
-	protected BufferedImage	image;
+	private static final String	IMAGE_NAME	= "Drawable.png";
+	
+	protected Location			loc;
+	protected double			speed		= 0.0;
+	protected int				points		= 0;
+	protected String			description;
+	protected BufferedImage		image;
+	protected int				width, height;
 	
 	public Drawable(Location location) {
 		this(location, IMAGE_NAME);
@@ -28,11 +32,13 @@ public class Drawable extends JComponent {
 	
 	public Drawable(Location location, String imageFileName) {
 		this.loc = location;
-		if(this.loc == null)
+		if (this.loc == null)
 			this.loc = new Location(0, 0, 0.0);
 		this.description = "Drawable";
-		image = null;
+		this.image = null;
 		setImage(imageFileName);
+		setWidth(30);
+		setHeight(30);
 	}
 	
 	public Drawable(int x, int y) {
@@ -54,9 +60,12 @@ public class Drawable extends JComponent {
 	
 	public void setImage(String fileName) {
 		try {
-			image = ImageIO.read(new File(fileName));
+//			File f = new File(fileName);
+			image = ImageIO.read(getClass().getResourceAsStream(fileName));
+//			image = ImageIO.read(new File(fileName));
 		} catch (IOException e) {
-			System.out.println("Error in Drawable: can't load image");
+			System.out.println("Error in Drawable: can't load image \""
+					+ fileName + "\"");
 		}
 	}
 	
@@ -100,4 +109,80 @@ public class Drawable extends JComponent {
 		this.speed = speed;
 	}
 	
-}
+	public int getWidth() {
+		return width;
+	}
+	
+	public void setWidth(int width) {
+		this.width = width;
+		super.setSize(width, height);
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public void setHeight(int height) {
+		this.height = height;
+		super.setSize(width, height);
+	}
+	
+	public BufferedImage getImage() {
+		return image;
+	}
+	
+	public Game getGame() {
+		return game;
+	}
+	
+	public void setGame(Game g) {
+		game = g;
+	}
+	
+	public int getPoints() {
+		return points;
+	}
+	
+	public void setPoints(int points) {
+		this.points = points;
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		// g.drawImage(image, loc.x(), loc.y(), null);
+		g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y() + height,
+				0, 0, image.getWidth(), image.getHeight(), game);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (obj instanceof Drawable) {
+			Drawable d = (Drawable) obj;
+			boolean result = true;
+			if (!loc.equals(d.getLoc()))
+				result = false;
+			else if (!(Math.abs(speed - d.getSpeed()) < 1e-9))
+				result = false;
+			else if (points != d.getPoints())
+				result = false;
+			else if (!description.equals(d.getDescription()))
+				result = false;
+//			else if (!image.equals(d.getImage()))
+//				result = false;
+			else if (width != d.getWidth() || height != d.getHeight())
+				result = false;
+			return result;
+		} else
+			return false;
+	}// equals
+	
+	@Override
+	public void finalize() throws Throwable {
+		game.awardPoints(points);
+		super.finalize();
+	}// finalize
+	
+}// Drawable class

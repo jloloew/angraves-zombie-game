@@ -4,8 +4,9 @@
 
 public class Stopwatch {
 	
-	private long startTime, stopTime, elapsed;
-	private boolean isRunning;
+	@SuppressWarnings("unused")
+	private long	startTime, stopTime, elapsed;
+	private boolean	isRunning;
 	
 	public Stopwatch() {
 		startTime = 0;
@@ -14,16 +15,21 @@ public class Stopwatch {
 		isRunning = false;
 	}
 	
-	public boolean isRunning() { return isRunning; }
+	public boolean isRunning() {
+		return isRunning;
+	}
+	
 	public void start() {
 		isRunning = true;
 		startTime = System.currentTimeMillis();
 	}
+	
 	public void stop() {
 		stopTime = System.currentTimeMillis();
 		isRunning = false;
 		elapsed = stopTime - startTime;
 	}
+	
 	public void reset() {
 		
 	}

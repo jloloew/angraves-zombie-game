@@ -1,6 +1,3 @@
-import javax.swing.JFrame;
-
-
 /**
  * @author jloew2
  */
@@ -8,18 +5,20 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Zombie extends Drawable {
 	
-	private static final String IMAGE_NAME = "Zombie.png";
+	private static final String	IMAGE_NAME		= "Zombie.png";
+	private static int			zombiesAlive	= 0;
 	
 	/*
 	 * Inherits: Location loc double speed
 	 */
-	private Drawable	target;
-	private double		health;
-	private double		attack;
+	private Drawable			target;
+	private double				health;
+	private double				attack;
 	
 	public Zombie(Drawable target) {
 		super(new Location(), IMAGE_NAME);
-		description = "Zombie";
+		super.description = "Zombie";
+		super.points = 50;
 		this.target = target;
 		// Start on a random edge
 		if (Math.random() >= 0.5) {
@@ -32,12 +31,21 @@ public class Zombie extends Drawable {
 		health = 30;
 		attack = 1.0;
 		speed = 1.0;
+		zombiesAlive++;
 	}
 	
 	@Override
 	public void move() {
 		loc.setDirection(loc.directionTo(target.getLoc()));
 		loc.move(speed);
+	}
+	
+	public void takeAction() {
+		
+	}
+	
+	public boolean isDead() {
+		return health <= 0;
 	}
 	
 	public Drawable getTarget() {
@@ -56,12 +64,26 @@ public class Zombie extends Drawable {
 		this.health = health;
 	}
 	
+	public void dealDamage(double damageDone) {
+		this.health -= damageDone;
+	}
+	
 	public double getAttack() {
 		return attack;
 	}
 	
 	public void setAttack(double attack) {
 		this.attack = attack;
+	}
+	
+	public static int getZombiesAlive() {
+		return zombiesAlive;
+	}
+	
+	@Override
+	public void finalize() throws Throwable {
+		zombiesAlive--;
+		super.finalize();
 	}
 	
 }

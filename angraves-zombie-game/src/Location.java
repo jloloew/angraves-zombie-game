@@ -16,6 +16,12 @@ public class Location {
 		this.setDirection(d);
 	}
 	
+	public Location(Location loc) {
+		this.x = loc.x();
+		this.y = loc.y();
+		this.direction = loc.getDirection();
+	}
+	
 	public Location() {
 		this(0, 0, 0.0);
 	}
@@ -110,6 +116,21 @@ public class Location {
 		if (direc < 0)
 			direc += 360;
 		return direc;
+	}
+	
+	public boolean isOutOfBounds() {
+		return x < 0 || y < 0 || x > Game.GAME_WIDTH || y > Game.GAME_HEIGHT;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Location) {
+			Location loc = (Location) obj;
+			return loc.x() == this.x
+					&& loc.y() == this.y
+					&& Math.abs(loc.getDirection() - this.getDirection()) < 1e-9;
+		} else
+			return false;
 	}
 	
 }// Location class

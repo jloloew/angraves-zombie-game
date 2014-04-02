@@ -1,3 +1,6 @@
+import java.awt.Graphics;
+
+
 /**
  * @author jloew2
  */
@@ -5,23 +8,26 @@
 @SuppressWarnings("serial")
 public class Player extends Drawable {
 	
-	private static final String IMAGE_NAME = "Angrave.png";
+	private static final String	IMAGE_NAME	= "Angrave.png";
 	
 	/*
 	 * From Drawable: Location loc double speed
 	 */
-	private double	maxSpeed	= 3.0;
-	private double	health;
-	private Weapon	weapon;
-	private boolean	isShooting;
+	private double				health;
+	private Weapon				weapon;
+	private boolean				isShooting;
 	
 	public Player() {
-		super(new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, 0.0), IMAGE_NAME);
+		this(new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, 0.0));
+	}
+	
+	public Player(Location location) {
+		super(location, IMAGE_NAME);
 		description = "Player";
-		speed = 0.0;
-		weapon = new Weapon();
+		speed = 3.0;
 		health = 100.0;
 		isShooting = false;
+		weapon = new Weapon(this);
 	}
 	
 	public void restoreHealth(double healthRestored) {
@@ -32,8 +38,23 @@ public class Player extends Drawable {
 		health -= healthLost;
 	}
 	
+	// @Override
+	// public void draw(JFrame frame) {
+	// super.draw(frame);
+	// Graphics g = image.getGraphics();
+	// g.drawImage(image, loc.x(), loc.y(), frame);
+	// }
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		g.drawImage(weapon.getImage(), loc.x() + 3, loc.y() + 3, loc.x() + 3
+				+ width, loc.y() + 3 + height, 0, 0, weapon.getImage()
+				.getWidth(), weapon.getImage().getHeight(), game);
+	}
+	
 	public void move(int dx, int dy) {
-		loc.move(dx, dy);
+		super.loc.move(dx, dy);
 	}
 	
 	public double getHealth() {
@@ -61,17 +82,6 @@ public class Player extends Drawable {
 	}
 	
 	public void setSpeed(double speed) {
-		if (speed > maxSpeed)
-			super.setSpeed(maxSpeed);
-		else
-			super.setSpeed(speed);
-	}
-	
-	public double getMaxSpeed() {
-		return maxSpeed;
-	}
-	
-	public void setMaxSpeed(double maxSpeed) {
-		this.maxSpeed = maxSpeed;
+		super.setSpeed(speed);
 	}
 }

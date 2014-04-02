@@ -5,118 +5,160 @@
 import java.util.ArrayList;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.JFrame;
+import java.io.File;
+import java.io.IOException;
 
-import JavaGame.Game.AL;
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
 
 @SuppressWarnings("serial")
 public class Game extends JFrame {
 	
-	public static final int		GAME_WIDTH	= 640, GAME_HEIGHT = 480;
-	private ArrayList<Drawable>	drawables;
-	private Drawable			player1;
+	public static int			GAME_WIDTH	= 800, GAME_HEIGHT = 600;
 	
-	int							x, y;
-	private Image				dbImage;
-	private Graphics			dbg;
+	private Drawable			background;
+	private Player				player1;
+	private ArrayList<Drawable>	drawables;
+	private ArrayList<Zombie>	zombies;
+	private ArrayList<Bullet>	bullets;
+	private int					score		= 0;
+	private boolean				isPaused;
+	private boolean				shouldDisplayHelp;
 	
 	public class AL extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
 			int keyCode = e.getKeyCode();
-			if (keyCode == e.VK_LEFT) {
-				if (x <= 10) {
-					x = 10;
-				} else {
-					x -= 5;
-				}
-			}
-			if (keyCode == e.VK_RIGHT) {
-				if (x >= 750) {
-					x = 750;
-				} else {
-					x += 5;
-				}
-			}
-			if (keyCode == e.VK_UP) {
-				if (y <= 30) {
-					y = 30;
-				} else {
-					y -= 5;
-				}
-			}
-			if (keyCode == e.VK_DOWN) {
-				if (y >= 370) {
-					y = 370;
-				} else {
-					y += 5;
-				}
-			}
-		}
+			if (shouldDisplayHelp()) {
+				setShouldDisplayHelp(false);
+			} else if (isPaused()) {
+				if (keyCode == KeyEvent.VK_P) {
+					setPaused(false);
+				}// nested if
+			} else if (keyCode == KeyEvent.VK_H) {
+				setShouldDisplayHelp(true);
+			} else if (keyCode == KeyEvent.VK_P) {
+				setPaused(true);
+			} else if (keyCode == KeyEvent.VK_LEFT) {
+				player1.getLoc().setDirection(270);
+			} else if (keyCode == KeyEvent.VK_RIGHT) {
+				player1.getLoc().setDirection(90);
+			} else if (keyCode == KeyEvent.VK_UP) {
+				player1.getLoc().setDirection(0);
+			} else if (keyCode == KeyEvent.VK_DOWN) {
+				player1.getLoc().setDirection(180);
+			} else if (keyCode == KeyEvent.VK_SPACE) {
+				player1.setIsShooting(true);
+			}// else if
+		}// keyPressed
 		
 		public void keyReleased(KeyEvent e) {
-			
-		}
-	}
+			int keyCode = e.getKeyCode();
+			if (keyCode == KeyEvent.VK_SPACE) {
+				player1.setIsShooting(false);
+			}// if
+		}// keyReleased
+	}// AL class
 	
 	public Game() {
-		addKeyListener(new AL());
-		this.setTitle("Angrave VS. Zombie");
-		this.setSize(800, 600);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
-		setBackground(Color.BLUE);
-		
-		x = 400;
-		y = 300;
+		// JFrame stuff
+		super.addKeyListener(new AL());
+		super.setTitle("Angrave vs. Zombies");
+		try {
+			super.setIconImage(ImageIO.read(getClass().getResourceAsStream("Icon.png")));
+//			super.setIconImage(ImageIO.read(new File("Icon.png")));
+		} catch (IOException e) {
+			System.out.println("Error: Can't load icon image");
+		}
+		super.setSize(GAME_WIDTH, GAME_HEIGHT);
+		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.setBackground(Color.WHITE);
+		super.setVisible(true);
+		// Draw the background image
+		background = new Drawable(new Location(0, 0, 0.0), "Background.png");
+		background.getImage().getGraphics().drawImage(background.getImage(), 0, 0, null);
+//		Graphics g = background.getGraphics();
+		super.add(background);
 		
 		this.drawables = new ArrayList<Drawable>();
-		this.player1 = new Drawable(GAME_WIDTH / 2, GAME_HEIGHT / 2,
-				"Player1.png");
-		this.player1.draw(this);	// This line must go AFTER the JFrame is
+		this.player1 = new Player(new Location(GAME_WIDTH / 2, GAME_HEIGHT / 2,
+				0.0));
+//		this.player1.draw(this);	// This line must go AFTER the JFrame is
 									// initialized
+		super.add(this.player1);
+		super.repaint();
 		this.drawables.add(this.player1);
+		this.score = 0;
+		this.isPaused = false;
+		this.shouldDisplayHelp = true;
 	}
 	
 	public void paint(Graphics g) {
-		dbImage = createImage(getWidth(), getHeight());
-		dbg = dbImage.getGraphics();
-		paintComponent(dbg);
-		g.drawImage(dbImage, 0, 0, this);
+		// dbImage = createImage(getWidth(), getHeight());
+		// dbg = dbImage.getGraphics();
+		// paintComponent(dbg);
+		// g.drawImage(dbImage, 0, 0, this);
+		
 	}
 	
 	public void paintComponent(Graphics g) {
-		
-		g.setColor(Color.GREEN);
-		g.fillOval(x, y, 40, 40);
-		repaint();
+		//
+		// g.setColor(Color.GREEN);
+		// g.fillOval(x, y, 40, 40);
+		// repaint();
 	}
 	
 	public static void main(String[] args) throws InterruptedException {
 		Game game = new Game();
-		ArrayList<Zombie> zombies = new ArrayList<>(50);
+		game.setShouldDisplayHelp(false);
+		game.setPaused(false);	//TODO: remove this line
+		ArrayList<Zombie> zombies = new ArrayList<>();
 		for (int i = 0; i < zombies.size(); i++) {
 			zombies.set(i, new Zombie(game.getPlayer1()));
 		}// for
 		boolean gameIsRunning = true;
 		while (gameIsRunning) {
 			
-			for(int i = 0; i < game.getDrawables().size(); i++) {
-				Drawable dbl = game.getDrawables().get(i);
-				dbl.move();	// Update positions
-				dbl.draw(game);
-			}// for
-			// Update positions
-			
-			// Update game state
-			
-			// Draw game
-			
-			Zen.flipBuffer();
-			Thread.sleep(90);
+			// Check if the help screen should be displayed
+			if (game.shouldDisplayHelp()) {
+				game.setPaused(true);
+				// TODO: this
+			}
+			// Check if the game is paused
+			else if (game.isPaused()) {
+				// TODO: this
+			}
+			// Continue with the normal run loop
+			else {
+				// Move all Drawables
+				for (int i = 0; i < game.getDrawables().size(); i++) {
+					Drawable dbl = game.getDrawables().get(i);
+					// Location oldLoc = new Location(dbl.getLoc());
+					dbl.move();	// Update positions
+					// if (!dbl.getLoc().equals(oldLoc)) { // redraw only if
+					// necessary
+					// dbl.update(game.getGraphics());
+					// }
+					// dbl.draw(game);
+				}// for
+					// All Bullets and Zombies should take action
+				for (int i = 0; i < game.getBullets().size(); i++) {
+					game.getBullets().get(i).takeAction();
+				}
+				for (int i = 0; i < game.getZombies().size(); i++) {
+					game.getZombies().get(i).takeAction();
+				}
+				// Redraw everything
+				// for(int i=0; i<game.getDrawables().size(); i++){
+				// Drawable dbl = game.getDrawables().get(i);
+				//
+				// }
+				game.repaint();
+				
+				Thread.sleep(60);
+			}// if/else for paused/help
 		}// while
 	}// main
 	
@@ -129,20 +171,65 @@ public class Game extends JFrame {
 	}
 	
 	public void addDrawable(Drawable d) {
+		if (d == null)
+			return;
+		super.add(d);
 		drawables.add(d);
+		if (d instanceof Zombie)
+			zombies.add((Zombie) d);
+		if (d instanceof Bullet)
+			bullets.add((Bullet) d);
 	}
 	
-	public boolean removeDrawable(Drawable d) {
-		return drawables.remove(d);
+	public void removeDrawable(Drawable d) {
+		if (d == null)
+			return;
+		super.remove(d);
+		if (d instanceof Zombie)
+			zombies.remove((Zombie) d);
+		if (d instanceof Bullet)
+			bullets.remove((Bullet) d);
+		drawables.remove(d);
+		awardPoints(d.getPoints());	// get points for killing stuff
+		d = null;
 	}
 	
-	public ArrayList<Location> getZombieLocations() {
-		ArrayList<Location> locs = new ArrayList<>(0);
-		for(Drawable d : drawables) {
-			if(d instanceof Zombie)
-				locs.add(d.getLoc());
-		}
-		return locs;
+	public void awardPoints(int points) {
+		this.score += points;
+	}
+	
+	public void setSize(int width, int height) {
+		GAME_WIDTH = width;
+		GAME_HEIGHT = height;
+		super.setSize(GAME_WIDTH, GAME_HEIGHT);
+	}
+	
+	public boolean isPaused() {
+		return isPaused;
+	}
+	
+	public void setPaused(boolean isPaused) {
+		this.isPaused = isPaused;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+	
+	public boolean shouldDisplayHelp() {
+		return shouldDisplayHelp;
+	}
+	
+	public void setShouldDisplayHelp(boolean shouldDisplayHelp) {
+		this.shouldDisplayHelp = shouldDisplayHelp;
+	}
+	
+	public ArrayList<Bullet> getBullets() {
+		return bullets;
+	}
+	
+	public ArrayList<Zombie> getZombies() {
+		return zombies;
 	}
 	
 }// Game class
