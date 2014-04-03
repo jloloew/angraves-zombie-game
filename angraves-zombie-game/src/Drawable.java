@@ -60,9 +60,9 @@ public class Drawable extends JComponent {
 	
 	public void setImage(String fileName) {
 		try {
-//			File f = new File(fileName);
+			// File f = new File(fileName);
 			image = ImageIO.read(getClass().getResourceAsStream(fileName));
-//			image = ImageIO.read(new File(fileName));
+			// image = ImageIO.read(new File(fileName));
 		} catch (IOException e) {
 			System.out.println("Error in Drawable: can't load image \""
 					+ fileName + "\"");
@@ -151,8 +151,9 @@ public class Drawable extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		// g.drawImage(image, loc.x(), loc.y(), null);
-		g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y() + height,
-				0, 0, image.getWidth(), image.getHeight(), game);
+		if (image != null)
+			g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y()
+					+ height, 0, 0, image.getWidth(), image.getHeight(), game);
 	}
 	
 	@Override
@@ -170,8 +171,8 @@ public class Drawable extends JComponent {
 				result = false;
 			else if (!description.equals(d.getDescription()))
 				result = false;
-//			else if (!image.equals(d.getImage()))
-//				result = false;
+			// else if (!image.equals(d.getImage()))
+			// result = false;
 			else if (width != d.getWidth() || height != d.getHeight())
 				result = false;
 			return result;
