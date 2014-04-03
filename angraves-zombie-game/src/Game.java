@@ -7,7 +7,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.io.File;
+//import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -78,9 +78,12 @@ public class Game extends JFrame {
 		super.setVisible(true);
 		// Draw the background image
 		background = new Drawable(new Location(0, 0, 0.0), "Background.png");
-		background.getImage().getGraphics().drawImage(background.getImage(), 0, 0, null);
+		background.setWidth(GAME_WIDTH);
+		background.setHeight(GAME_HEIGHT);
+//		background.getImage().getGraphics().drawImage(background.getImage(), 0, 0, this);
 //		Graphics g = background.getGraphics();
 		super.add(background);
+		super.paintComponents(getGraphics());
 		
 		this.drawables = new ArrayList<Drawable>();
 		this.player1 = new Player(new Location(GAME_WIDTH / 2, GAME_HEIGHT / 2,

@@ -23,6 +23,8 @@ public class Player extends Drawable {
 	
 	public Player(Location location) {
 		super(location, IMAGE_NAME);
+		super.setWidth(50);
+		super.setHeight(50);
 		description = "Player";
 		speed = 3.0;
 		health = 100.0;
