@@ -90,6 +90,10 @@ public class Game extends JFrame {
 		super.add(this.player1);
 		super.repaint();
 		this.drawables.add(this.player1);
+		
+		this.bullets = new ArrayList<>(0);
+		this.zombies = new ArrayList<>(3);
+		
 		this.score = 0;
 		this.isPaused = false;
 		this.shouldDisplayHelp = true;
@@ -114,9 +118,10 @@ public class Game extends JFrame {
 		Game game = new Game();
 		game.setShouldDisplayHelp(false);
 		game.setPaused(false);	//TODO: remove this line
-		ArrayList<Zombie> zombies = new ArrayList<>();
-		for (int i = 0; i < zombies.size(); i++) {
-			zombies.set(i, new Zombie(game.getPlayer1()));
+//		ArrayList<Zombie> zombies = new ArrayList<>();
+		for (int i = 0; i < game.zombies.size(); i++) {
+//			game.zombies.set(i, new Zombie(game.getPlayer1()));
+			game.addDrawable(new Zombie(game.player1));
 		}// for
 		boolean gameIsRunning = true;
 		while (gameIsRunning) {
@@ -155,7 +160,9 @@ public class Game extends JFrame {
 				// Drawable dbl = game.getDrawables().get(i);
 				//
 				// }
-				game.repaint();
+//				game.repaint();
+//				game.update(game.getGraphics());
+				game.paintAll(game.getGraphics());
 				
 				Thread.sleep(60);
 			}// if/else for paused/help

@@ -53,9 +53,9 @@ public class Player extends Drawable {
 				.getWidth(), weapon.getImage().getHeight(), game);
 	}
 	
-	public void move(int dx, int dy) {
-		super.loc.move(dx, dy);
-	}
+//	public void move(int dx, int dy) {
+//		super.loc.move(dx, dy);
+//	}
 	
 	public double getHealth() {
 		return health;
