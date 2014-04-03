@@ -32,7 +32,8 @@ public class Weapon {
 		this.player = player;
 		// set image
 		try {
-			image = ImageIO.read(new File(IMAGE_NAME));
+//			image = ImageIO.read(new File(IMAGE_NAME));
+			image = ImageIO.read(getClass().getResourceAsStream(IMAGE_NAME));
 		} catch (IOException e) {
 			System.out
 					.println("Error in Weapon constructor: can't load image \""
