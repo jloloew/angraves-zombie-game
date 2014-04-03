@@ -83,6 +83,7 @@ public class Game extends JFrame {
 //		background.getImage().getGraphics().drawImage(background.getImage(), 0, 0, this);
 //		Graphics g = background.getGraphics();
 		super.add(background);
+//		super.setComponentZOrder(background, 100);
 		super.paintComponents(getGraphics());
 		
 		this.drawables = new ArrayList<Drawable>();
@@ -166,6 +167,7 @@ public class Game extends JFrame {
 //				game.repaint();
 //				game.update(game.getGraphics());
 				game.paintAll(game.getGraphics());
+//				game.paintComponents(game.getGraphics());
 				
 				Thread.sleep(60);
 			}// if/else for paused/help
@@ -184,6 +186,7 @@ public class Game extends JFrame {
 		if (d == null)
 			return;
 		super.add(d);
+		super.paintComponents(getGraphics());
 		drawables.add(d);
 		if (d instanceof Zombie)
 			zombies.add((Zombie) d);
