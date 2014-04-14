@@ -47,13 +47,12 @@ public class Player extends Drawable {
 	// g.drawImage(image, loc.x(), loc.y(), frame);
 	// }
 	
-	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		g.drawImage(weapon.getImage(), loc.x() + 3, loc.y() + 3, loc.x() + 3
-				+ width, loc.y() + 3 + height, 0, 0, weapon.getImage()
-				.getWidth(), weapon.getImage().getHeight(), game);
-	}
+//	@Override
+//	protected void paintComponent(Graphics g) {
+//		g.drawImage(weapon.getImage(), loc.x() + 3, loc.y() + 3, loc.x() + 3
+//				+ width, loc.y() + 3 + height, 0, 0, weapon.getImage()
+//				.getWidth(), weapon.getImage().getHeight(), game);
+//	}
 	
 //	public void move(int dx, int dy) {
 //		super.loc.move(dx, dy);

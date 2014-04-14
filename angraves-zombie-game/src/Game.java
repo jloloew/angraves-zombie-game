@@ -7,7 +7,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-//import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -16,6 +15,8 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class Game extends JFrame {
+	
+	public static boolean		debug	= true;
 	
 	public static int			GAME_WIDTH	= 800, GAME_HEIGHT = 600;
 	
@@ -67,8 +68,8 @@ public class Game extends JFrame {
 		super.addKeyListener(new AL());
 		super.setTitle("Angrave vs. Zombies");
 		try {
-			super.setIconImage(ImageIO.read(getClass().getResourceAsStream("Icon.png")));
-//			super.setIconImage(ImageIO.read(new File("Icon.png")));
+			super.setIconImage(ImageIO.read(getClass().getResourceAsStream(
+					"Icon.png")));
 		} catch (IOException e) {
 			System.out.println("Error: Can't load icon image");
 		}
@@ -76,23 +77,22 @@ public class Game extends JFrame {
 		super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		super.setBackground(Color.WHITE);
 		super.setVisible(true);
+		this.drawables = new ArrayList<Drawable>();
+		
 		// Draw the background image
 		background = new Drawable(new Location(0, 0, 0.0), "Background.png");
 		background.setWidth(GAME_WIDTH);
 		background.setHeight(GAME_HEIGHT);
-//		background.getImage().getGraphics().drawImage(background.getImage(), 0, 0, this);
-//		Graphics g = background.getGraphics();
 		super.add(background);
-//		super.setComponentZOrder(background, 100);
-		super.paintComponents(getGraphics());
+//		 super.setComponentZOrder(background, 100);
 		
-		this.drawables = new ArrayList<Drawable>();
-		this.player1 = new Player(new Location(GAME_WIDTH / 2, GAME_HEIGHT / 2,
+		this.player1 = new Player(new Location(GAME_WIDTH / 4, GAME_HEIGHT / 4,
 				0.0));
-//		this.player1.draw(this);	// This line must go AFTER the JFrame is
-									// initialized
+		this.player1.setGame(this);
+//		this.player1.setImage("Angrave.png");
 		super.add(this.player1);
-		super.repaint();
+//		super.repaint();
+//		super.paintComponents(getGraphics());
 		this.drawables.add(this.player1);
 		
 		this.bullets = new ArrayList<>(0);
@@ -102,31 +102,15 @@ public class Game extends JFrame {
 		this.isPaused = false;
 		this.shouldDisplayHelp = true;
 	}
-	
-	public void paint(Graphics g) {
-		// dbImage = createImage(getWidth(), getHeight());
-		// dbg = dbImage.getGraphics();
-		// paintComponent(dbg);
-		// g.drawImage(dbImage, 0, 0, this);
-		
-	}
-	
-	public void paintComponent(Graphics g) {
-		//
-		// g.setColor(Color.GREEN);
-		// g.fillOval(x, y, 40, 40);
-		// repaint();
-	}
-	
+
 	public static void main(String[] args) throws InterruptedException {
 		Game game = new Game();
 		game.setShouldDisplayHelp(false);
-		game.setPaused(false);	//TODO: remove this line
-//		ArrayList<Zombie> zombies = new ArrayList<>();
+		game.setPaused(false);	// TODO: remove this line
+		// ArrayList<Zombie> zombies = new ArrayList<>();
 		for (int i = 0; i < game.zombies.size(); i++) {
-//			game.zombies.set(i, new Zombie(game.getPlayer1()));
 			game.addDrawable(new Zombie(game.player1));
-		}// for
+		}
 		boolean gameIsRunning = true;
 		while (gameIsRunning) {
 			
@@ -151,7 +135,7 @@ public class Game extends JFrame {
 					// dbl.update(game.getGraphics());
 					// }
 					// dbl.draw(game);
-				}// for
+				}
 					// All Bullets and Zombies should take action
 				for (int i = 0; i < game.getBullets().size(); i++) {
 					game.getBullets().get(i).takeAction();
@@ -164,10 +148,10 @@ public class Game extends JFrame {
 				// Drawable dbl = game.getDrawables().get(i);
 				//
 				// }
-//				game.repaint();
-//				game.update(game.getGraphics());
-				game.paintAll(game.getGraphics());
-//				game.paintComponents(game.getGraphics());
+//				 game.repaint();
+//				 game.update(game.getGraphics());
+//				game.paintAll(game.getGraphics());
+				 game.paintComponents(game.getGraphics());
 				
 				Thread.sleep(60);
 			}// if/else for paused/help
@@ -179,6 +163,8 @@ public class Game extends JFrame {
 	}
 	
 	public ArrayList<Drawable> getDrawables() {
+		if (drawables == null)
+			drawables = new ArrayList<Drawable>();
 		return drawables;
 	}
 	
@@ -238,11 +224,15 @@ public class Game extends JFrame {
 	}
 	
 	public ArrayList<Bullet> getBullets() {
-		return bullets;
+		if (this.bullets == null)
+			this.bullets = new ArrayList<Bullet>();
+		return this.bullets;
 	}
 	
 	public ArrayList<Zombie> getZombies() {
-		return zombies;
+		if (this.zombies == null)
+			this.zombies = new ArrayList<Zombie>();
+		return this.zombies;
 	}
 	
-}// Game class
+}

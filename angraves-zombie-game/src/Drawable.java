@@ -45,14 +45,23 @@ public class Drawable extends JComponent {
 		this(new Location(x, y, 0.0));
 	}
 	
-	public void draw(JFrame frame) {
-		if (image == null)
-			System.out.println("Error in Drawable: image is null");
-		else {
-			Graphics g = image.getGraphics();
-			g.drawImage(image, loc.x(), loc.y(), frame);
-		}
+	@Override
+	protected void paintComponent(Graphics g) {
+		g.drawImage(image, loc.x(), loc.y(), game);
+		// if (image != null) {
+		// g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y()
+		// + height, 0, 0, image.getWidth(), image.getHeight(), game);
+		// }
 	}
+	
+//	public void draw(JFrame frame) {
+//		if (image == null)
+//			System.out.println("Error in Drawable draw: image is null");
+//		else {
+//			Graphics g = image.getGraphics();
+//			g.drawImage(image, loc.x(), loc.y(), frame);
+//		}
+//	}
 	
 	public void move() {
 		loc.move(speed);
@@ -60,9 +69,7 @@ public class Drawable extends JComponent {
 	
 	public void setImage(String fileName) {
 		try {
-			// File f = new File(fileName);
 			image = ImageIO.read(getClass().getResourceAsStream(fileName));
-			// image = ImageIO.read(new File(fileName));
 		} catch (IOException e) {
 			System.out.println("Error in Drawable: can't load image \""
 					+ fileName + "\"");
@@ -148,19 +155,10 @@ public class Drawable extends JComponent {
 	}
 	
 	@Override
-	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		// g.drawImage(image, loc.x(), loc.y(), null);
-		if (image != null)
-			g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y()
-					+ height, 0, 0, image.getWidth(), image.getHeight(), game);
-	}
-	
-	@Override
 	public boolean equals(Object obj) {
-		if (obj == null)
+		if (obj == null || !(obj instanceof Drawable))
 			return false;
-		if (obj instanceof Drawable) {
+		else {
 			Drawable d = (Drawable) obj;
 			boolean result = true;
 			if (!loc.equals(d.getLoc()))
@@ -176,14 +174,13 @@ public class Drawable extends JComponent {
 			else if (width != d.getWidth() || height != d.getHeight())
 				result = false;
 			return result;
-		} else
-			return false;
-	}// equals
+		}
+	}
 	
 	@Override
 	public void finalize() throws Throwable {
 		game.awardPoints(points);
 		super.finalize();
-	}// finalize
+	}
 	
-}// Drawable class
+}
