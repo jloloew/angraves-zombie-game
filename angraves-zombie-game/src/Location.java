@@ -57,7 +57,7 @@ public class Location {
 	}
 	
 	public void setDirection(double direction) {
-		this.direction = direction;
+		this.direction = direction % 360;
 	}
 	
 	public void move(int dx, int dy) {
@@ -77,7 +77,7 @@ public class Location {
 	}
 	
 	public void moveToward(double d, double distance) {
-		double radians = Math.toRadians(d);
+		double radians = Math.toRadians(d - 90);
 		int dx = (int) (distance * Math.cos(radians));
 		int dy = (int) (distance * Math.sin(radians));
 		move(dx, dy);
@@ -104,9 +104,12 @@ public class Location {
 		// Avoid division by 0
 		if (loc.getX() - x == 0)
 			return loc.getY() - y > 0 ? 180.0 : 0.0;
-		double radians = Math.atan((y - loc.getY()) / (loc.getX() - x));
+		int dx = loc.getX() - x;
+		int dy = loc.getY() - y;
+		double radians = Math.atan(1.0*dy/dx);
 		double degrees = Math.toDegrees(radians);
-		if (loc.getX() - x < 0 || degrees < 0)
+		degrees -= 90;
+		if (dx < 0 && degrees < 0)
 			degrees += 180;
 		return degrees;
 	}

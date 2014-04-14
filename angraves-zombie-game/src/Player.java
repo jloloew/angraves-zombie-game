@@ -1,6 +1,3 @@
-import java.awt.Graphics;
-
-
 /**
  * @author jloew2
  */
@@ -9,6 +6,8 @@ import java.awt.Graphics;
 public class Player extends Drawable {
 	
 	private static final String	IMAGE_NAME	= "Angrave.png";
+	private static final int IMAGE_HEIGHT = 60;
+	private static final int IMAGE_WIDTH = 45;
 	
 	/*
 	 * From Drawable: Location loc double speed
@@ -23,11 +22,12 @@ public class Player extends Drawable {
 	
 	public Player(Location location) {
 		super(location, IMAGE_NAME);
-		super.setWidth(50);
-		super.setHeight(50);
+		super.setWidth(5000);
+		super.setHeight(5000);
 		description = "Player";
-		speed = 3.0;
+		speed = 10.0;
 		health = 100.0;
+		super.isMoving = false;
 		isShooting = false;
 		weapon = new Weapon(this);
 	}
@@ -55,7 +55,8 @@ public class Player extends Drawable {
 //	}
 	
 //	public void move(int dx, int dy) {
-//		super.loc.move(dx, dy);
+//		if(isMoving)
+//			super.loc.move(dx, dy);
 //	}
 	
 	public double getHealth() {

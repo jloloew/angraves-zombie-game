@@ -4,12 +4,10 @@
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 
 
 @SuppressWarnings("serial")
@@ -25,6 +23,7 @@ public class Drawable extends JComponent {
 	protected String			description;
 	protected BufferedImage		image;
 	protected int				width, height;
+	protected boolean				isMoving;
 	
 	public Drawable(Location location) {
 		this(location, IMAGE_NAME);
@@ -36,9 +35,10 @@ public class Drawable extends JComponent {
 			this.loc = new Location(0, 0, 0.0);
 		this.description = "Drawable";
 		this.image = null;
+		this.isMoving = false;
 		setImage(imageFileName);
-		setWidth(30);
-		setHeight(30);
+		setWidth(300);
+		setHeight(300);
 	}
 	
 	public Drawable(int x, int y) {
@@ -47,6 +47,8 @@ public class Drawable extends JComponent {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+//		g.drawImage(image, loc.x(), loc.y(), null);
 		g.drawImage(image, loc.x(), loc.y(), game);
 		// if (image != null) {
 		// g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y()
@@ -64,7 +66,8 @@ public class Drawable extends JComponent {
 //	}
 	
 	public void move() {
-		loc.move(speed);
+		if(isMoving)
+			loc.move(speed);
 	}
 	
 	public void setImage(String fileName) {
@@ -152,6 +155,14 @@ public class Drawable extends JComponent {
 	
 	public void setPoints(int points) {
 		this.points = points;
+	}
+	
+	public boolean getIsMoving() {
+		return isMoving;
+	}
+	
+	public void setIsMoving(boolean b) {
+		isMoving = b;
 	}
 	
 	@Override

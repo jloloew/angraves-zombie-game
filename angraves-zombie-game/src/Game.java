@@ -4,7 +4,6 @@
 
 import java.util.ArrayList;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -15,6 +14,8 @@ import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
 public class Game extends JFrame {
+	
+	public static boolean BACKGROUND_HIDDEN = false;
 	
 	public static boolean		debug	= true;
 	
@@ -43,12 +44,16 @@ public class Game extends JFrame {
 			} else if (keyCode == KeyEvent.VK_P) {
 				setPaused(true);
 			} else if (keyCode == KeyEvent.VK_LEFT) {
+				player1.setIsMoving(true);
 				player1.getLoc().setDirection(270);
 			} else if (keyCode == KeyEvent.VK_RIGHT) {
+				player1.setIsMoving(true);
 				player1.getLoc().setDirection(90);
 			} else if (keyCode == KeyEvent.VK_UP) {
+				player1.setIsMoving(true);
 				player1.getLoc().setDirection(0);
 			} else if (keyCode == KeyEvent.VK_DOWN) {
+				player1.setIsMoving(true);
 				player1.getLoc().setDirection(180);
 			} else if (keyCode == KeyEvent.VK_SPACE) {
 				player1.setIsShooting(true);
@@ -59,7 +64,9 @@ public class Game extends JFrame {
 			int keyCode = e.getKeyCode();
 			if (keyCode == KeyEvent.VK_SPACE) {
 				player1.setIsShooting(false);
-			}// if
+			} else if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode==KeyEvent.VK_UP || keyCode==KeyEvent.VK_DOWN) {
+				player1.setIsMoving(false);
+			}
 		}// keyReleased
 	}// AL class
 	
@@ -79,24 +86,24 @@ public class Game extends JFrame {
 		super.setVisible(true);
 		this.drawables = new ArrayList<Drawable>();
 		
-		// Draw the background image
-		background = new Drawable(new Location(0, 0, 0.0), "Background.png");
-		background.setWidth(GAME_WIDTH);
-		background.setHeight(GAME_HEIGHT);
-		super.add(background);
-//		 super.setComponentZOrder(background, 100);
-		
-		this.player1 = new Player(new Location(GAME_WIDTH / 4, GAME_HEIGHT / 4,
-				0.0));
+		// Add the first player
+		this.player1 = new Player(new Location(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0.0));
 		this.player1.setGame(this);
-//		this.player1.setImage("Angrave.png");
 		super.add(this.player1);
-//		super.repaint();
-//		super.paintComponents(getGraphics());
 		this.drawables.add(this.player1);
+		super.setComponentZOrder(player1, 0);
 		
-		this.bullets = new ArrayList<>(0);
-		this.zombies = new ArrayList<>(3);
+		// Draw the background image
+		if(!BACKGROUND_HIDDEN) {
+			background = new Drawable(new Location(0, 0, 0.0), "Background.png");
+			background.setWidth(GAME_WIDTH);
+			background.setHeight(GAME_HEIGHT);
+			super.add(background);
+			super.setComponentZOrder(background, 1);
+		}
+			
+		this.bullets = new ArrayList<>();
+		this.zombies = new ArrayList<>();
 		
 		this.score = 0;
 		this.isPaused = false;
@@ -107,8 +114,7 @@ public class Game extends JFrame {
 		Game game = new Game();
 		game.setShouldDisplayHelp(false);
 		game.setPaused(false);	// TODO: remove this line
-		// ArrayList<Zombie> zombies = new ArrayList<>();
-		for (int i = 0; i < game.zombies.size(); i++) {
+		for (int i = 0; i < 3; i++) {
 			game.addDrawable(new Zombie(game.player1));
 		}
 		boolean gameIsRunning = true;
@@ -129,7 +135,9 @@ public class Game extends JFrame {
 				for (int i = 0; i < game.getDrawables().size(); i++) {
 					Drawable dbl = game.getDrawables().get(i);
 					// Location oldLoc = new Location(dbl.getLoc());
-					dbl.move();	// Update positions
+					// Don't draw Zombies or Bullets
+					if(!(dbl instanceof Bullet || dbl instanceof Zombie))
+						dbl.move();	// Update positions
 					// if (!dbl.getLoc().equals(oldLoc)) { // redraw only if
 					// necessary
 					// dbl.update(game.getGraphics());
@@ -139,9 +147,11 @@ public class Game extends JFrame {
 					// All Bullets and Zombies should take action
 				for (int i = 0; i < game.getBullets().size(); i++) {
 					game.getBullets().get(i).takeAction();
+					game.getBullets().get(i).move();
 				}
 				for (int i = 0; i < game.getZombies().size(); i++) {
 					game.getZombies().get(i).takeAction();
+					game.getZombies().get(i).move();
 				}
 				// Redraw everything
 				// for(int i=0; i<game.getDrawables().size(); i++){
@@ -172,7 +182,7 @@ public class Game extends JFrame {
 		if (d == null)
 			return;
 		super.add(d);
-		super.paintComponents(getGraphics());
+		super.setComponentZOrder(d, 1);
 		drawables.add(d);
 		if (d instanceof Zombie)
 			zombies.add((Zombie) d);
