@@ -18,6 +18,7 @@ public class Drawable extends JComponent {
 	private static final String	IMAGE_NAME	= "Drawable.png";
 	
 	protected Location			loc;
+	protected int				imageWidth, imageHeight;
 	protected double			speed		= 0.0;
 	protected int				points		= 0;
 	protected String			description;
@@ -33,6 +34,8 @@ public class Drawable extends JComponent {
 		this.loc = location;
 		if (this.loc == null)
 			this.loc = new Location(0, 0, 0.0);
+		this.imageWidth = 30;
+		this.imageHeight = 30;
 		this.description = "Drawable";
 		this.image = null;
 		this.isMoving = false;

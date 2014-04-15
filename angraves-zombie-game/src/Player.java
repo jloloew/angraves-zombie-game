@@ -6,8 +6,6 @@
 public class Player extends Drawable {
 	
 	private static final String	IMAGE_NAME	= "Angrave.png";
-	private static final int IMAGE_HEIGHT = 60;
-	private static final int IMAGE_WIDTH = 45;
 	
 	/*
 	 * From Drawable: Location loc double speed
@@ -24,6 +22,8 @@ public class Player extends Drawable {
 		super(location, IMAGE_NAME);
 		super.setWidth(5000);
 		super.setHeight(5000);
+		imageWidth = 45;
+		imageHeight = 60;
 		description = "Player";
 		speed = 10.0;
 		health = 100.0;

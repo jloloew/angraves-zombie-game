@@ -7,7 +7,7 @@
 
 public class Location {
 	
-	private int		x, y;
+	private double		x, y;
 	private double	direction;	// In degrees, 0 is north
 								
 	public Location(int x, int y, double d) {
@@ -27,18 +27,18 @@ public class Location {
 	}
 	
 	public int getX() {
-		return x;
+		return (int)x;
 	}
 	
-	public int x() {
+	public double x() {
 		return x;
 	}
 	
 	public int getY() {
-		return y;
+		return (int) y;
 	}
 	
-	public int y() {
+	public double y() {
 		return y;
 	}
 	
@@ -46,12 +46,12 @@ public class Location {
 		return direction;
 	}
 	
-	public void setX(int x) {
+	public void setX(double x) {
 		if (0 <= x && x <= Game.GAME_WIDTH)
 			this.x = x;
 	}
 	
-	public void setY(int y) {
+	public void setY(double y) {
 		if (0 <= y && y <= Game.GAME_HEIGHT)
 			this.y = y;
 	}
@@ -60,7 +60,7 @@ public class Location {
 		this.direction = direction % 360;
 	}
 	
-	public void move(int dx, int dy) {
+	public void move(double dx, double dy) {
 		setX(x + dx);
 		setY(y + dy);
 	}
@@ -71,15 +71,15 @@ public class Location {
 	
 	public void moveToward(Location loc, double distance) {
 		double radians = Math.toRadians(directionTo(loc));
-		int dx = (int) (distance * Math.cos(radians));
-		int dy = (int) (distance * Math.sin(radians));
+		double dx = distance * Math.cos(radians);
+		double dy = distance * Math.sin(radians);
 		move(dx, dy);
 	}
 	
 	public void moveToward(double d, double distance) {
 		double radians = Math.toRadians(d - 90);
-		int dx = (int) (distance * Math.cos(radians));
-		int dy = (int) (distance * Math.sin(radians));
+		double dx = distance * Math.cos(radians);
+		double dy = distance * Math.sin(radians);
 		move(dx, dy);
 	}
 	
@@ -102,14 +102,14 @@ public class Location {
 	
 	public double directionTo(Location loc) {
 		// Avoid division by 0
-		if (loc.getX() - x == 0)
+		if (loc.getX() - x <= 1e-12)
 			return loc.getY() - y > 0 ? 180.0 : 0.0;
-		int dx = loc.getX() - x;
-		int dy = loc.getY() - y;
+		double dx = loc.getX() - x;
+		double dy = loc.getY() - y;
 		double radians = Math.atan(1.0*dy/dx);
 		double degrees = Math.toDegrees(radians);
 		degrees -= 90;
-		if (dx < 0 && degrees < 0)
+		if (!(dx < 0 && degrees < 0))
 			degrees += 180;
 		return degrees;
 	}

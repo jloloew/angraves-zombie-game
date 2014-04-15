@@ -20,6 +20,8 @@ public class Bullet extends Drawable {
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
+		imageWidth = 15;
+		imageHeight = 15;
 		super.points = 10;
 		this.description = "Bullet";
 		this.damage = damage;
