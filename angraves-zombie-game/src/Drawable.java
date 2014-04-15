@@ -52,7 +52,7 @@ public class Drawable extends JComponent {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 //		g.drawImage(image, loc.x(), loc.y(), null);
-		g.drawImage(image, loc.x(), loc.y(), game);
+		g.drawImage(image, loc.getX(), loc.getY(), game);
 		// if (image != null) {
 		// g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y()
 		// + height, 0, 0, image.getWidth(), image.getHeight(), game);

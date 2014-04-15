@@ -44,7 +44,7 @@ public class Zombie extends Drawable {
 	public void move() {
 		if (isMoving) {
 			loc.setDirection(loc.directionTo(target.getLoc()));
-			super.move(speed);
+			super.move();
 		}
 	}
 	
