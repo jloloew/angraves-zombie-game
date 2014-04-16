@@ -57,6 +57,7 @@ public class Game extends JFrame {
 				player1.getLoc().setDirection(180);
 			} else if (keyCode == KeyEvent.VK_SPACE) {
 				player1.setIsShooting(true);
+				Sound.play("src/laser.wav");
 			}// else if
 		}// keyPressed
 		
