@@ -102,7 +102,7 @@ public class Location {
 	
 	public double directionTo(Location loc) {
 		// Avoid division by 0
-		if (loc.getX() - x <= 1e-12)
+		if (loc.getX() - x <= 1e-12 && loc.getX() - x > 0)
 			return loc.getY() - y > 0 ? 180.0 : 0.0;
 		double dx = loc.getX() - x;
 		double dy = loc.getY() - y;
