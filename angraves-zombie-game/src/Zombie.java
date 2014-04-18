@@ -6,7 +6,7 @@
 public class Zombie extends Drawable {
 	
 	private static final String	IMAGE_NAME		= "Zombie.png";
-	
+	private static final String	IMAGE_NAME2		= "Zombie2.png";
 	private static int			zombiesAlive	= 0;
 	
 	/*
@@ -38,6 +38,8 @@ public class Zombie extends Drawable {
 		attack = 1.0;
 		speed = 3.0;
 		zombiesAlive++;
+		
+		
 	}
 	
 	@Override
@@ -45,7 +47,14 @@ public class Zombie extends Drawable {
 		if (isMoving) {
 			loc.setDirection(loc.directionTo(target.getLoc()));
 			super.move();
+			if ( target.getLoc().getX() - loc.getX() < 0 ) {
+				this.setImage(IMAGE_NAME2);
+			}
+			else {
+				setImage(IMAGE_NAME);
+			}
 		}
+		
 	}
 	
 	public void takeAction() {
