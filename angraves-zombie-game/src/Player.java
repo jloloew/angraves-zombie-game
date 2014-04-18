@@ -86,4 +86,10 @@ public class Player extends Drawable {
 	public void setSpeed(double speed) {
 		super.setSpeed(speed);
 	}
+
+	@Override
+	public void takeAction() {
+		if(isShooting)
+			game.addDrawable(weapon.shoot());
+	}
 }

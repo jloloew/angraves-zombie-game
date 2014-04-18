@@ -20,6 +20,7 @@ public class Bullet extends Drawable {
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
+		System.out.println("Bullet made");
 		imageWidth = 15;
 		imageHeight = 15;
 		super.points = 10;
@@ -35,17 +36,17 @@ public class Bullet extends Drawable {
 	}// move
 	
 	public void takeAction() {
-		ArrayList<Zombie> zombies = super.game.getZombies();
+		ArrayList<Zombie> zombies = game.getZombies();
 		for (int i = 0; i < zombies.size(); i++) {
 			Zombie z = zombies.get(i);
-			if (super.loc.distanceTo(z.getLoc()) <= hitRadius) {
+			if (loc.distanceTo(z.getLoc()) <= hitRadius) {
 				z.dealDamage(damage);
 				if (z.isDead()) {
-					super.game.removeDrawable(z);
-				}// if
-				super.game.removeDrawable(this);
-			}// if
-		}// for
+					game.removeDrawable(z);
+				}
+				game.removeDrawable(this);
+			}
+		}
 	}
 	
 	public static boolean bulletsDoExist() {

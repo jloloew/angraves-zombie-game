@@ -96,7 +96,7 @@ public class Game extends JFrame {
 		
 		// Draw the background image
 		if(!BACKGROUND_HIDDEN) {
-			background = new Drawable(new Location(0, 0, 0.0), "Background.png");
+			background = new Background(new Location(0, 0, 0.0), "Background.png");
 			background.setWidth(GAME_WIDTH);
 			background.setHeight(GAME_HEIGHT);
 			super.add(background);
@@ -145,7 +145,10 @@ public class Game extends JFrame {
 					// }
 					// dbl.draw(game);
 				}
-					// All Bullets and Zombies should take action
+					// All Drawables should take action
+				for (int i = 0; i < game.getDrawables().size(); i++) {
+					game.getDrawables().get(i).takeAction();
+				}
 				for (int i = 0; i < game.getBullets().size(); i++) {
 					game.getBullets().get(i).takeAction();
 					game.getBullets().get(i).move();
@@ -155,10 +158,6 @@ public class Game extends JFrame {
 					game.getZombies().get(i).move();
 				}
 				// Redraw everything
-				// for(int i=0; i<game.getDrawables().size(); i++){
-				// Drawable dbl = game.getDrawables().get(i);
-				//
-				// }
 //				 game.repaint();
 //				 game.update(game.getGraphics());
 //				game.paintAll(game.getGraphics());

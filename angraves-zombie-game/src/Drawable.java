@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 
 
 @SuppressWarnings("serial")
-public class Drawable extends JComponent {
+public abstract class Drawable extends JComponent {
 	
 	protected Game				game;
 	
@@ -47,6 +47,8 @@ public class Drawable extends JComponent {
 	public Drawable(int x, int y) {
 		this(new Location(x, y, 0.0));
 	}
+	
+	public abstract void takeAction();
 	
 	@Override
 	protected void paintComponent(Graphics g) {

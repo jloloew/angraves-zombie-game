@@ -49,7 +49,7 @@ public class Zombie extends Drawable {
 	}
 	
 	public void takeAction() {
-		
+		//TODO attack players
 	}
 	
 	public boolean isDead() {
