@@ -10,25 +10,30 @@ public class Bullet extends Drawable implements Actionable {
 	private static final String	IMAGE_NAME		= Constants.Bullet_image_name;
 	private static final String	SOUND_NAME		= Constants.Bullet_fired_sound_name;
 	
-	protected double			damage			= Constants.Bullet_damage;
-	private static double		hitRadius		= Constants.Bullet_hit_radius;
+	protected double			damage;
 	private static int			numberOfBullets	= 0;
+	private static double		hitRadius		= 3.0;
 	
 	public Bullet(Location location, double damage) {
 		this(location, damage, IMAGE_NAME);
-	}
+	}// Bullet
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
 		imageWidth = Constants.Bullet_width;
 		imageHeight = Constants.Bullet_height;
-		points = Constants.Bullet_points;
-		speed = Constants.Bullet_speed;
+		this.points = Constants.Bullet_points;
 		this.description = "Bullet";
 		this.damage = damage;
 		numberOfBullets++;
 		Sound.play(SOUND_NAME);
-	}
+	}// Bullet
+	
+	@Override
+	public void move() {
+		super.move();
+		
+	}// move
 	
 	public void takeAction() {
 		ArrayList<Zombie> zombies = game.getZombies();
@@ -36,6 +41,9 @@ public class Bullet extends Drawable implements Actionable {
 			Zombie z = zombies.get(i);
 			if (loc.distanceTo(z.getLoc()) <= hitRadius) {
 				z.dealDamage(damage);
+				if (z.isDead()) {
+					game.removeDrawable(z);
+				}
 				game.removeDrawable(this);
 			}
 		}
