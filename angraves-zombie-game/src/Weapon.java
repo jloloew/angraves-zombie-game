@@ -16,6 +16,10 @@ public class Weapon extends Drawable {
 		super(player.getLoc(), IMAGE_NAME);
 		loc = player.getLoc();
 		this.player = player;
+		imageWidth = 60;
+		imageHeight = 52;
+		super.setWidth(5000);
+		super.setHeight(5000);
 	}
 	
 	public void addAmmo(int howManyMore) {
