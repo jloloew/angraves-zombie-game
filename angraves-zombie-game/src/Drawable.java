@@ -69,15 +69,6 @@ public abstract class Drawable extends JComponent {
 		}
 	}
 	
-	// public void draw(JFrame frame) {
-	// if (image == null)
-	// System.out.println("Error in Drawable draw: image is null");
-	// else {
-	// Graphics g = image.getGraphics();
-	// g.drawImage(image, loc.x(), loc.y(), frame);
-	// }
-	// }
-	
 	@Override
 	public void finalize() throws Throwable {
 		game.awardPoints(points);
