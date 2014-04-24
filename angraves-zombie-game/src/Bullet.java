@@ -7,7 +7,7 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class Bullet extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME		= "Bullet.png";
+	private static final String	IMAGE_NAME		= Constants.Bullet_image_name;
 	
 	protected double			damage			= Constants.Bullet_damage;
 	private static double		hitRadius		= Constants.Bullet_hit_radius;
@@ -24,17 +24,12 @@ public class Bullet extends Drawable implements Actionable {
 		super.setWidth(5000);
 		super.setHeight(5000);
 		super.points = Constants.Bullet_points;
+		super.speed = Constants.Bullet_speed;
 		this.description = "Bullet";
 		this.damage = damage;
 		numberOfBullets++;
 		Sound.play(Constants.Bullet_fired_sound_name);
 	}
-	
-	@Override
-	public void move() {
-		super.move();
-		
-	}// move
 	
 	public void takeAction() {
 		ArrayList<Zombie> zombies = game.getZombies();
@@ -42,9 +37,6 @@ public class Bullet extends Drawable implements Actionable {
 			Zombie z = zombies.get(i);
 			if (loc.distanceTo(z.getLoc()) <= hitRadius) {
 				z.dealDamage(damage);
-				// if (z.isDead()) {
-				// game.removeDrawable(z);
-				// }
 				game.removeDrawable(this);
 			}
 		}
@@ -52,20 +44,20 @@ public class Bullet extends Drawable implements Actionable {
 	
 	public static boolean bulletsDoExist() {
 		return numberOfBullets > 0;
-	}// bulletsDoExist
+	}
 	
 	@Override
 	public void finalize() throws Throwable {
 		numberOfBullets--;
 		super.finalize();
-	}// finalize
+	}
 	
 	public static double getHitRadius() {
 		return hitRadius;
-	}// getHitRadius
+	}
 	
 	public static void setHitRadius(double hitRadius) {
 		Bullet.hitRadius = hitRadius;
-	}// setHitRadius
+	}
 	
-}// Bullet class
+}
