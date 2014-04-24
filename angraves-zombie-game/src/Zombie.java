@@ -58,7 +58,13 @@ public class Zombie extends Drawable implements Actionable {
 	}
 	
 	public void takeAction() {
-		//TODO attack players
+		if (this.isDead()){
+			Sound.play("src/death.wav");
+			visible=false;
+			game.removeDrawable(this);
+			
+			
+		}
 	}
 	
 	public boolean isDead() {
