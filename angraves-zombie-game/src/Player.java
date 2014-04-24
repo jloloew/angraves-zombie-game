@@ -3,7 +3,7 @@
  */
 
 @SuppressWarnings("serial")
-public class Player extends Drawable {
+public class Player extends Drawable implements Actionable {
 	
 	private static final String	IMAGE_NAME	= "Angrave.png";
 	
@@ -87,7 +87,6 @@ public class Player extends Drawable {
 		super.setSpeed(speed);
 	}
 
-	@Override
 	public void takeAction() {
 		if(isShooting)
 			game.addDrawable(weapon.shoot());

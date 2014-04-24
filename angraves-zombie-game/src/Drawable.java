@@ -9,11 +9,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-
 @SuppressWarnings("serial")
 public abstract class Drawable extends JComponent {
 	
-	protected Game				game;
+	protected static Game		game;
 	
 	private static final String	IMAGE_NAME	= "Drawable.png";
 	
@@ -24,7 +23,7 @@ public abstract class Drawable extends JComponent {
 	protected String			description;
 	protected BufferedImage		image;
 	protected int				width, height;
-	protected boolean				isMoving;
+	protected boolean			isMoving;
 	
 	public Drawable(Location location) {
 		this(location, IMAGE_NAME);
@@ -48,12 +47,10 @@ public abstract class Drawable extends JComponent {
 		this(new Location(x, y, 0.0));
 	}
 	
-	public abstract void takeAction();
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-//		g.drawImage(image, loc.x(), loc.y(), null);
+		// g.drawImage(image, loc.x(), loc.y(), null);
 		g.drawImage(image, loc.getX(), loc.getY(), game);
 		// if (image != null) {
 		// g.drawImage(image, loc.x(), loc.y(), loc.x() + width, loc.y()
@@ -61,17 +58,17 @@ public abstract class Drawable extends JComponent {
 		// }
 	}
 	
-//	public void draw(JFrame frame) {
-//		if (image == null)
-//			System.out.println("Error in Drawable draw: image is null");
-//		else {
-//			Graphics g = image.getGraphics();
-//			g.drawImage(image, loc.x(), loc.y(), frame);
-//		}
-//	}
+	// public void draw(JFrame frame) {
+	// if (image == null)
+	// System.out.println("Error in Drawable draw: image is null");
+	// else {
+	// Graphics g = image.getGraphics();
+	// g.drawImage(image, loc.x(), loc.y(), frame);
+	// }
+	// }
 	
 	public void move() {
-		if(isMoving)
+		if (isMoving)
 			loc.move(speed);
 	}
 	
@@ -79,8 +76,7 @@ public abstract class Drawable extends JComponent {
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream(fileName));
 		} catch (IOException e) {
-			System.out.println("Error in Drawable: can't load image \""
-					+ fileName + "\"");
+			System.out.println("Error in Drawable: can't load image \"" + fileName + "\"");
 		}
 	}
 	
@@ -146,11 +142,11 @@ public abstract class Drawable extends JComponent {
 		return image;
 	}
 	
-	public Game getGame() {
+	public static Game getGame() {
 		return game;
 	}
 	
-	public void setGame(Game g) {
+	public static void setGame(Game g) {
 		game = g;
 	}
 	

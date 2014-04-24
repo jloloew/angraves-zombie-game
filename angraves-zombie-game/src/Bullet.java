@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 @SuppressWarnings("serial")
-public class Bullet extends Drawable {
+public class Bullet extends Drawable implements Actionable {
 	
 	private static final String	IMAGE_NAME		= "Bullet.png";
 	

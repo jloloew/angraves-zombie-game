@@ -11,22 +11,21 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-
 @SuppressWarnings("serial")
 public class Game extends JFrame {
 	
-	public static boolean BACKGROUND_HIDDEN = false;
+	public static boolean		BACKGROUND_HIDDEN	= false;
 	
-	public static boolean		debug	= true;
+	public static boolean		debug				= true;
 	
-	public static int			GAME_WIDTH	= 800, GAME_HEIGHT = 600;
+	public static int			GAME_WIDTH			= 800, GAME_HEIGHT = 600;
 	
 	private Drawable			background;
 	private Player				player1;
 	private ArrayList<Drawable>	drawables;
 	private ArrayList<Zombie>	zombies;
 	private ArrayList<Bullet>	bullets;
-	private int					score		= 0;
+	private int					score				= 0;
 	private boolean				isPaused;
 	private boolean				shouldDisplayHelp;
 	
@@ -65,7 +64,8 @@ public class Game extends JFrame {
 			int keyCode = e.getKeyCode();
 			if (keyCode == KeyEvent.VK_SPACE) {
 				player1.setIsShooting(false);
-			} else if(keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode==KeyEvent.VK_UP || keyCode==KeyEvent.VK_DOWN) {
+			} else if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_UP
+					|| keyCode == KeyEvent.VK_DOWN) {
 				player1.setIsMoving(false);
 			}
 		}// keyReleased
@@ -76,8 +76,7 @@ public class Game extends JFrame {
 		super.addKeyListener(new AL());
 		super.setTitle("Angrave vs. Zombies");
 		try {
-			super.setIconImage(ImageIO.read(getClass().getResourceAsStream(
-					"Icon.png")));
+			super.setIconImage(ImageIO.read(getClass().getResourceAsStream("Icon.png")));
 		} catch (IOException e) {
 			System.out.println("Error: Can't load icon image");
 		}
@@ -95,14 +94,14 @@ public class Game extends JFrame {
 		super.setComponentZOrder(player1, 0);
 		
 		// Draw the background image
-		if(!BACKGROUND_HIDDEN) {
+		if (!BACKGROUND_HIDDEN) {
 			background = new Background(new Location(0, 0, 0.0), "Background.png");
 			background.setWidth(GAME_WIDTH);
 			background.setHeight(GAME_HEIGHT);
 			super.add(background);
 			super.setComponentZOrder(background, 1);
 		}
-			
+		
 		this.bullets = new ArrayList<>();
 		this.zombies = new ArrayList<>();
 		
@@ -110,9 +109,10 @@ public class Game extends JFrame {
 		this.isPaused = false;
 		this.shouldDisplayHelp = true;
 	}
-
+	
 	public static void main(String[] args) throws InterruptedException {
 		Game game = new Game();
+		Drawable.setGame(game);
 		game.setShouldDisplayHelp(false);
 		game.setPaused(false);	// TODO: remove this line
 		for (int i = 0; i < 3; i++) {
@@ -137,7 +137,7 @@ public class Game extends JFrame {
 					Drawable dbl = game.getDrawables().get(i);
 					// Location oldLoc = new Location(dbl.getLoc());
 					// Don't draw Zombies or Bullets
-					if(!(dbl instanceof Bullet || dbl instanceof Zombie))
+					if (!(dbl instanceof Bullet || dbl instanceof Zombie))
 						dbl.move();	// Update positions
 					// if (!dbl.getLoc().equals(oldLoc)) { // redraw only if
 					// necessary
@@ -145,10 +145,17 @@ public class Game extends JFrame {
 					// }
 					// dbl.draw(game);
 				}
-					// All Drawables should take action
-				for (int i = 0; i < game.getDrawables().size(); i++) {
-					game.getDrawables().get(i).takeAction();
+				// All Drawables that are Actionables should take action
+				for (Drawable d : game.getDrawables()) {
+					if (d instanceof Actionable) {
+						synchronized (d) {
+							((Actionable) d).takeAction();
+						}
+					}
 				}
+				// for (int i = 0; i < game.getDrawables().size(); i++) {
+				// game.getDrawables().get(i).takeAction();
+				// }
 				for (int i = 0; i < game.getBullets().size(); i++) {
 					game.getBullets().get(i).takeAction();
 					game.getBullets().get(i).move();
@@ -158,10 +165,10 @@ public class Game extends JFrame {
 					game.getZombies().get(i).move();
 				}
 				// Redraw everything
-//				 game.repaint();
-//				 game.update(game.getGraphics());
-//				game.paintAll(game.getGraphics());
-				 game.paintComponents(game.getGraphics());
+				// game.repaint();
+				// game.update(game.getGraphics());
+				// game.paintAll(game.getGraphics());
+				game.paintComponents(game.getGraphics());
 				
 				Thread.sleep(60);
 			}// if/else for paused/help
