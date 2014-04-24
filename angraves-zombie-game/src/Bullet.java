@@ -4,32 +4,31 @@
 
 import java.util.ArrayList;
 
-
 @SuppressWarnings("serial")
 public class Bullet extends Drawable implements Actionable {
 	
 	private static final String	IMAGE_NAME		= "Bullet.png";
 	
-	protected double			damage;
+	protected double			damage			= Constants.Bullet_damage;
+	private static double		hitRadius		= Constants.Bullet_hit_radius;
 	private static int			numberOfBullets	= 0;
-	private static double		hitRadius		= 3.0;
 	
 	public Bullet(Location location, double damage) {
 		this(location, damage, IMAGE_NAME);
-	}// Bullet
+	}
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
-		imageWidth = 15;
-		imageHeight = 15;
-		super.setWidth(4000);
+		imageWidth = Constants.Bullet_width;
+		imageHeight = Constants.Bullet_height;
+		super.setWidth(5000);
 		super.setHeight(5000);
-		super.points = 10;
+		super.points = Constants.Bullet_points;
 		this.description = "Bullet";
 		this.damage = damage;
 		numberOfBullets++;
 		Sound.play(Constants.Bullet_fired_sound_name);
-	}// Bullet
+	}
 	
 	@Override
 	public void move() {
@@ -43,9 +42,9 @@ public class Bullet extends Drawable implements Actionable {
 			Zombie z = zombies.get(i);
 			if (loc.distanceTo(z.getLoc()) <= hitRadius) {
 				z.dealDamage(damage);
-				//if (z.isDead()) {
-				//	game.removeDrawable(z);
-				//}
+				// if (z.isDead()) {
+				// game.removeDrawable(z);
+				// }
 				game.removeDrawable(this);
 			}
 		}
