@@ -95,7 +95,7 @@ public class Game extends JFrame {
 		
 		// Draw the background image
 		if (!BACKGROUND_HIDDEN) {
-			background = new Background(new Location(0, 0, 0.0), "Background.png");
+			background = new Background();
 			background.setWidth(GAME_WIDTH);
 			background.setHeight(GAME_HEIGHT);
 			super.add(background);
@@ -133,31 +133,15 @@ public class Game extends JFrame {
 			// Continue with the normal run loop
 			else {
 				// Move all Drawables
-				for (int i = 0; i < game.getDrawables().size(); i++) {
-					Drawable dbl = game.getDrawables().get(i);
-					// Location oldLoc = new Location(dbl.getLoc());
-					// Don't draw Zombies or Bullets
-					if (!(dbl instanceof Bullet || dbl instanceof Zombie))
-						dbl.move();	// Update positions
-					// if (!dbl.getLoc().equals(oldLoc)) { // redraw only if
-					// necessary
-					// dbl.update(game.getGraphics());
-					// }
-					// dbl.draw(game);
+				for (int i = 0; i < game.drawables.size(); i++) {
+					Drawable dbl = game.drawables.get(i);
+					dbl.move();	// Update positions
 				}
 				// All Drawables that are Actionables should take action
 				for (int i = 0; i < game.getDrawables().size(); i++) {
 					Drawable d = game.getDrawables().get(i);
 					if(d instanceof Actionable)
 						((Actionable) d).takeAction();
-				}
-				for (int i = 0; i < game.getBullets().size(); i++) {
-					game.getBullets().get(i).takeAction();
-					game.getBullets().get(i).move();
-				}
-				for (int i = 0; i < game.getZombies().size(); i++) {
-					game.getZombies().get(i).takeAction();
-					game.getZombies().get(i).move();
 				}
 				// Redraw everything
 				// game.repaint();

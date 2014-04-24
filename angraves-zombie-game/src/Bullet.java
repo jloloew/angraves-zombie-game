@@ -20,7 +20,6 @@ public class Bullet extends Drawable implements Actionable {
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
-		System.out.println("Bullet made");
 		imageWidth = 15;
 		imageHeight = 15;
 		super.points = 10;
