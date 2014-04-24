@@ -4,11 +4,11 @@
 
 import java.util.ArrayList;
 
-
 @SuppressWarnings("serial")
 public class Bullet extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME		= "Bullet.png";
+	private static final String	IMAGE_NAME		= Constants.Bullet_image_name;
+	private static final String	SOUND_NAME		= Constants.Bullet_fired_sound_name;
 	
 	protected double			damage;
 	private static int			numberOfBullets	= 0;
@@ -26,6 +26,7 @@ public class Bullet extends Drawable implements Actionable {
 		this.description = "Bullet";
 		this.damage = damage;
 		numberOfBullets++;
+		Sound.play(SOUND_NAME);
 	}// Bullet
 	
 	@Override

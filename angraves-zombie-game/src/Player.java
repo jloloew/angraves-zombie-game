@@ -5,7 +5,7 @@
 @SuppressWarnings("serial")
 public class Player extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME	= "Angrave.png";
+	private static final String	IMAGE_NAME	= Constants.Player_image_name;
 	
 	/*
 	 * From Drawable: Location loc double speed
@@ -47,17 +47,17 @@ public class Player extends Drawable implements Actionable {
 	// g.drawImage(image, loc.x(), loc.y(), frame);
 	// }
 	
-//	@Override
-//	protected void paintComponent(Graphics g) {
-//		g.drawImage(weapon.getImage(), loc.x() + 3, loc.y() + 3, loc.x() + 3
-//				+ width, loc.y() + 3 + height, 0, 0, weapon.getImage()
-//				.getWidth(), weapon.getImage().getHeight(), game);
-//	}
+	// @Override
+	// protected void paintComponent(Graphics g) {
+	// g.drawImage(weapon.getImage(), loc.x() + 3, loc.y() + 3, loc.x() + 3
+	// + width, loc.y() + 3 + height, 0, 0, weapon.getImage()
+	// .getWidth(), weapon.getImage().getHeight(), game);
+	// }
 	
-//	public void move(int dx, int dy) {
-//		if(isMoving)
-//			super.loc.move(dx, dy);
-//	}
+	// public void move(int dx, int dy) {
+	// if(isMoving)
+	// super.loc.move(dx, dy);
+	// }
 	
 	public double getHealth() {
 		return health;
@@ -86,9 +86,9 @@ public class Player extends Drawable implements Actionable {
 	public void setSpeed(double speed) {
 		super.setSpeed(speed);
 	}
-
+	
 	public void takeAction() {
-		if(isShooting)
+		if (isShooting)
 			game.addDrawable(weapon.shoot());
 	}
 }

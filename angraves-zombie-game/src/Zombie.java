@@ -5,8 +5,8 @@
 @SuppressWarnings("serial")
 public class Zombie extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME		= "Zombie.png";
-	private static final String	IMAGE_NAME2		= "Zombie2.png";
+	private static final String	IMAGE_NAME		= Constants.Zombie_right_image_name;
+	private static final String	IMAGE_NAME2		= Constants.Zombie_left_image_name;
 	private static int			zombiesAlive	= 0;
 	
 	/*

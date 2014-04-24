@@ -2,26 +2,16 @@
  * @author jloew2
  */
 
-
-
-
 @SuppressWarnings("serial")
 public class Weapon extends Drawable {
 	
-	private static final String	IMAGE_NAME	= "Weapon.png";
+	private static final String	IMAGE_NAME		= Constants.Weapon_image_name;
 	
-	private int					ammo = 500;						// how many more
-															// bullets you can
-															// shoot
-	private double				rateOfFire = 2.5;				// bullets per
-															// second
-	private double				bulletDamage = 10;				// damage done by
-															// each bullet
-	protected Player			player;					// the player
-															// holding the
-															// weapon
-//	protected BufferedImage		image;
-	
+	private int					ammo			= 500;							// how many more bullets you can shoot
+	private double				rateOfFire		= 2.5;							// bullets per second
+	private double				bulletDamage	= 10;							// damage done by each bullet
+	protected Player			player;										// the player holding the weapon
+																				
 	public Weapon(Player player) {
 		super(player.getLoc(), IMAGE_NAME);
 		loc = player.getLoc();
@@ -41,9 +31,9 @@ public class Weapon extends Drawable {
 		ammo += howManyMore;
 	}
 	
-//	public BufferedImage getImage() {
-//		return image;
-//	}
+	// public BufferedImage getImage() {
+	// return image;
+	// }
 	
 	public double getBulletDamage() {
 		return bulletDamage;
