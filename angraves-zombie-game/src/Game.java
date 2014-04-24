@@ -142,10 +142,13 @@ public class Game extends JFrame {
 						((Actionable) d).takeAction();
 				}
 				// Redraw everything
-				// game.repaint();
-				// game.update(game.getGraphics());
-				// game.paintAll(game.getGraphics());
-				game.paintComponents(game.getGraphics());
+				switch(Constants.DrawingMethod) {
+					case PaintAll: game.paintAll(game.getGraphics()); break;
+					case PaintComponents: game.paintComponents(game.getGraphics()); break;
+					case Repaint: game.repaint(); break;
+					case Update: game.update(game.getGraphics()); break;
+					default: System.out.println("Unknown value for DrawingMethod."); break;
+				}
 				
 				Thread.sleep(60);
 			}// if/else for paused/help
