@@ -5,16 +5,16 @@
 @SuppressWarnings("serial")
 public class Zombie extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME		= Constants.Zombie_right_image_name;
-	private static final String	IMAGE_NAME2		= Constants.Zombie_left_image_name;
+	private static final String	IMAGE_NAME		= Constants.Zombie_image_name_right;
+	private static final String	IMAGE_NAME2		= Constants.Zombie_image_name_left;
 	private static int			zombiesAlive	= 0;
 	
+	private double				attack;
+	private double				health;
 	/*
 	 * Inherits: Location loc double speed
 	 */
 	private Drawable			target;
-	private double				health;
-	private double				attack;
 	
 	public Zombie(Drawable target) {
 		super(new Location(), IMAGE_NAME);
@@ -39,7 +39,35 @@ public class Zombie extends Drawable implements Actionable {
 		speed = 3.0;
 		zombiesAlive++;
 		
-		
+	}
+	
+	public void dealDamage(double damageDone) {
+		this.health -= damageDone;
+		if (isDead()) {
+			game.remove(this);
+		}
+	}
+	
+	@Override
+	public void finalize() throws Throwable {
+		zombiesAlive--;
+		super.finalize();
+	}
+	
+	public double getAttack() {
+		return attack;
+	}
+	
+	public double getHealth() {
+		return health;
+	}
+	
+	public Drawable getTarget() {
+		return target;
+	}
+	
+	public boolean isDead() {
+		return health <= 0;
 	}
 	
 	@Override
@@ -47,60 +75,34 @@ public class Zombie extends Drawable implements Actionable {
 		if (isMoving) {
 			loc.setDirection(loc.directionTo(target.getLoc()));
 			super.move();
-			if ( target.getLoc().getX() - loc.getX() < 0 ) {
+			if (target.getLoc().getX() < this.loc.getX()) {
 				this.setImage(IMAGE_NAME2);
-			}
-			else {
+			} else {
 				setImage(IMAGE_NAME);
 			}
 		}
-		
-	}
-	
-	public void takeAction() {
-		//TODO attack players
-	}
-	
-	public boolean isDead() {
-		return health <= 0;
-	}
-	
-	public Drawable getTarget() {
-		return target;
-	}
-	
-	public void setTarget(Drawable target) {
-		this.target = target;
-	}
-	
-	public double getHealth() {
-		return health;
-	}
-	
-	public void setHealth(double health) {
-		this.health = health;
-	}
-	
-	public void dealDamage(double damageDone) {
-		this.health -= damageDone;
-	}
-	
-	public double getAttack() {
-		return attack;
 	}
 	
 	public void setAttack(double attack) {
 		this.attack = attack;
 	}
 	
-	public static int getZombiesAlive() {
-		return zombiesAlive;
+	public void setHealth(double health) {
+		this.health = health;
 	}
 	
-	@Override
-	public void finalize() throws Throwable {
-		zombiesAlive--;
-		super.finalize();
+	public void setTarget(Drawable target) {
+		this.target = target;
+	}
+	
+	public void takeAction() {
+		if(this.loc.distanceTo(target.getLoc()) <= Constants.Zombie_damage_radius) {
+			
+		}
+	}
+	
+	public static int getZombiesAlive() {
+		return zombiesAlive;
 	}
 	
 }

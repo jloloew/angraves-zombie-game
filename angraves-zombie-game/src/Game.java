@@ -23,8 +23,8 @@ public class Game extends JFrame {
 	private Drawable			background;
 	private Player				player1;
 	private ArrayList<Drawable>	drawables;
-	private ArrayList<Zombie>	zombies;
 	private ArrayList<Bullet>	bullets;
+	private ArrayList<Zombie>	zombies;
 	private int					score				= 0;
 	private boolean				isPaused;
 	private boolean				shouldDisplayHelp;

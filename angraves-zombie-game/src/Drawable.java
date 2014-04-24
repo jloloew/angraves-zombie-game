@@ -124,7 +124,7 @@ public abstract class Drawable extends JComponent {
 	
 	public void setWidth(int width) {
 		this.width = width;
-		super.setSize(width, height);
+		super.setSize(this.width, this.height);
 	}
 	
 	public int getHeight() {
@@ -133,7 +133,7 @@ public abstract class Drawable extends JComponent {
 	
 	public void setHeight(int height) {
 		this.height = height;
-		super.setSize(width, height);
+		super.setSize(this.width, this.height);
 	}
 	
 	public BufferedImage getImage() {
