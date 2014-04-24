@@ -131,9 +131,9 @@ public class Game extends JFrame {
 			// Continue with the normal run loop
 			else {
 				// Move all Drawables
-				for (int i = 0; i < game.drawables.size(); i++) {
-					Drawable dbl = game.drawables.get(i);
-					dbl.move();	// Update positions
+				for (int i = 0; i < game.getDrawables().size(); i++) {
+					Drawable dbl = game.getDrawables().get(i);
+					dbl.move();
 				}
 				// All Drawables that are Actionables should take action
 				for (int i = 0; i < game.getDrawables().size(); i++) {
