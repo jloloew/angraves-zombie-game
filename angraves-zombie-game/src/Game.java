@@ -18,7 +18,7 @@ public class Game extends JFrame {
 	
 	public static boolean		debug				= true;
 	
-	public static int			GAME_WIDTH			= 800, GAME_HEIGHT = 600;
+	public static int			GAME_WIDTH			= Constants.Game_width, GAME_HEIGHT = Constants.Game_height;
 	
 	private Drawable			background;
 	private Player				player1;

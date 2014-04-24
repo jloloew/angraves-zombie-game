@@ -30,14 +30,12 @@ public abstract class Drawable extends JComponent {
 	}
 	
 	public Drawable(Location location, String imageFileName) {
-		this.loc = location;
-		if (this.loc == null)
-			this.loc = new Location(0, 0, 0.0);
+		this.loc = new Location(location);
 		this.imageWidth = 30;
 		this.imageHeight = 30;
 		this.description = "Drawable";
-		this.image = null;
 		this.isMoving = false;
+		this.image = null;
 		setImage(imageFileName);
 		setWidth(300);
 		setHeight(300);

@@ -7,7 +7,7 @@
 
 public class Location {
 	
-	private double		x, y;
+	private double	x, y;
 	private double	direction;	// In degrees, 0 is north
 								
 	public Location(int x, int y, double d) {
@@ -17,9 +17,15 @@ public class Location {
 	}
 	
 	public Location(Location loc) {
-		this.x = loc.x();
-		this.y = loc.y();
-		this.direction = loc.getDirection();
+		if (loc != null) {
+			this.x = loc.x();
+			this.y = loc.y();
+			this.direction = loc.getDirection();
+		} else {
+			this.x = 0;
+			this.y = 0;
+			this.direction = 0.0;
+		}
 	}
 	
 	public Location() {
@@ -27,7 +33,7 @@ public class Location {
 	}
 	
 	public int getX() {
-		return (int)x;
+		return (int) x;
 	}
 	
 	public double x() {
@@ -96,8 +102,7 @@ public class Location {
 	}
 	
 	public double distanceTo(Location loc) {
-		return Math.sqrt((x - loc.getX()) * (x - loc.getX()) + (y - loc.getY())
-				* (y - loc.getY()));
+		return Math.sqrt((x - loc.getX()) * (x - loc.getX()) + (y - loc.getY()) * (y - loc.getY()));
 	}
 	
 	public double directionTo(Location loc) {
@@ -106,7 +111,7 @@ public class Location {
 			return loc.getY() - y > 0 ? 180.0 : 0.0;
 		double dx = loc.getX() - x;
 		double dy = loc.getY() - y;
-		double radians = Math.atan(1.0*dy/dx);
+		double radians = Math.atan(1.0 * dy / dx);
 		double degrees = Math.toDegrees(radians);
 		degrees -= 90;
 		if (!(dx < 0 && degrees < 0))
@@ -129,9 +134,7 @@ public class Location {
 	public boolean equals(Object obj) {
 		if (obj instanceof Location) {
 			Location loc = (Location) obj;
-			return loc.x() == this.x
-					&& loc.y() == this.y
-					&& Math.abs(loc.getDirection() - this.getDirection()) < 1e-9;
+			return loc.x() == this.x && loc.y() == this.y && Math.abs(loc.getDirection() - this.getDirection()) < 1e-9;
 		} else
 			return false;
 	}

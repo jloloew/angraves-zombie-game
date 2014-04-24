@@ -7,9 +7,6 @@ public class Player extends Drawable implements Actionable {
 	
 	private static final String	IMAGE_NAME	= Constants.Player_image_name;
 	
-	/*
-	 * From Drawable: Location loc double speed
-	 */
 	private double				health;
 	private Weapon				weapon;
 	private boolean				isShooting;

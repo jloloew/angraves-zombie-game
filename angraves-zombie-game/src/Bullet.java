@@ -20,9 +20,9 @@ public class Bullet extends Drawable implements Actionable {
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
-		imageWidth = 15;
-		imageHeight = 15;
-		super.points = 10;
+		imageWidth = Constants.Bullet_width;
+		imageHeight = Constants.Bullet_height;
+		this.points = Constants.Bullet_points;
 		this.description = "Bullet";
 		this.damage = damage;
 		numberOfBullets++;

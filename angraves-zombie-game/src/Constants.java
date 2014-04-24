@@ -1,5 +1,15 @@
 
 public abstract class Constants {
+	// Sizes
+	public static final int Game_width = 800;
+	public static final int Game_height = 600;
+	
+	public static final int Bullet_width = 15;
+	public static final int Bullet_height = 15;
+	
+	// Points
+	public static final int Bullet_points = 10;
+	
 	// File names
 	public static final String Background_image_name = "Background.png";
 	public static final String Bullet_image_name = "Bullet.png";
