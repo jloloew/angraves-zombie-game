@@ -146,16 +146,11 @@ public class Game extends JFrame {
 					// dbl.draw(game);
 				}
 				// All Drawables that are Actionables should take action
-				for (Drawable d : game.getDrawables()) {
-					if (d instanceof Actionable) {
-						synchronized (d) {
-							((Actionable) d).takeAction();
-						}
-					}
+				for (int i = 0; i < game.getDrawables().size(); i++) {
+					Drawable d = game.getDrawables().get(i);
+					if(d instanceof Actionable)
+						((Actionable) d).takeAction();
 				}
-				// for (int i = 0; i < game.getDrawables().size(); i++) {
-				// game.getDrawables().get(i).takeAction();
-				// }
 				for (int i = 0; i < game.getBullets().size(); i++) {
 					game.getBullets().get(i).takeAction();
 					game.getBullets().get(i).move();
