@@ -5,7 +5,7 @@
 @SuppressWarnings("serial")
 public class Player extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME	= "Angrave_Headless.png";
+	private static final String	IMAGE_NAME	= Constants.Player_image_name;
 	
 	/*
 	 * From Drawable: Location loc double speed

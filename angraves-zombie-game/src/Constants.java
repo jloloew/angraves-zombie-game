@@ -13,7 +13,7 @@ public abstract class Constants {
 	public static final double			Bullet_hit_radius		= 3.0;
 	
 	// Player
-	public static final String			Player_image_name		= "Angrave.png";
+	public static final String			Player_image_name		= "Angrave_Headless.png";
 	
 	// Weapon
 	public static final String			Weapon_image_name		= "Weapon.png";
