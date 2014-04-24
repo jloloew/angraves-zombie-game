@@ -9,12 +9,12 @@ public class Zombie extends Drawable implements Actionable {
 	private static final String	IMAGE_NAME2		= Constants.Zombie_image_name_left;
 	private static int			zombiesAlive	= 0;
 	
-	private double				attack;
-	private double				health;
 	/*
 	 * Inherits: Location loc double speed
 	 */
 	private Drawable			target;
+	private double				health;
+	private double				attack;
 	
 	public Zombie(Drawable target) {
 		super(new Location(), IMAGE_NAME);
@@ -38,6 +38,7 @@ public class Zombie extends Drawable implements Actionable {
 		attack = 1.0;
 		speed = 3.0;
 		zombiesAlive++;
+		
 		
 	}
 	
