@@ -42,8 +42,8 @@ public abstract class Drawable extends JComponent {
 		this.isMoving = false;
 		this.image = null;
 		setImage(imageFileName);
-		setWidth(300);
-		setHeight(300);
+		setWidth(5000);
+		setHeight(5000);
 	}
 	
 	@Override
