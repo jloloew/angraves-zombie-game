@@ -7,11 +7,11 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class Bullet extends Drawable implements Actionable {
 	
-	private static final String	IMAGE_NAME		= Constants.Bullet_image_name;
-	
-	protected double			damage			= Constants.Bullet_damage;
 	private static double		hitRadius		= Constants.Bullet_hit_radius;
+	
+	private static final String	IMAGE_NAME		= Constants.Bullet_image_name;
 	private static int			numberOfBullets	= 0;
+	protected double			damage			= Constants.Bullet_damage;
 	
 	public Bullet(Location location, double damage) {
 		this(location, damage, IMAGE_NAME);
@@ -31,6 +31,12 @@ public class Bullet extends Drawable implements Actionable {
 		Sound.play(Constants.Bullet_fired_sound_name);
 	}
 	
+	@Override
+	public void finalize() throws Throwable {
+		numberOfBullets--;
+		super.finalize();
+	}
+	
 	public void takeAction() {
 		ArrayList<Zombie> zombies = game.getZombies();
 		for (int i = 0; i < zombies.size(); i++) {
@@ -44,12 +50,6 @@ public class Bullet extends Drawable implements Actionable {
 	
 	public static boolean bulletsDoExist() {
 		return numberOfBullets > 0;
-	}
-	
-	@Override
-	public void finalize() throws Throwable {
-		numberOfBullets--;
-		super.finalize();
 	}
 	
 	public static double getHitRadius() {

@@ -8,8 +8,8 @@ public class Player extends Drawable implements Actionable {
 	private static final String	IMAGE_NAME	= Constants.Player_image_name;
 	
 	private double				health		= Constants.Player_default_health;
-	private Weapon				weapon;
 	private boolean				isShooting;
+	private Weapon				weapon;
 	
 	public Player() {
 		this(new Location(Constants.Game_width / 2, Constants.Game_height / 2, 0.0));
@@ -29,10 +29,6 @@ public class Player extends Drawable implements Actionable {
 		weapon = new Weapon(this);
 	}
 	
-	public void restoreHealth(double healthRestored) {
-		health += healthRestored;
-	}
-	
 	public void dealDamage(double healthLost) {
 		health -= healthLost;
 	}
@@ -49,12 +45,12 @@ public class Player extends Drawable implements Actionable {
 		return isShooting;
 	}
 	
-	public void setHealth(double d) {
-		health = d;
+	public void restoreHealth(double healthRestored) {
+		health += healthRestored;
 	}
 	
-	public void setWeapon(Weapon w) {
-		weapon = w;
+	public void setHealth(double d) {
+		health = d;
 	}
 	
 	public void setIsShooting(boolean b) {
@@ -63,6 +59,10 @@ public class Player extends Drawable implements Actionable {
 	
 	public void setSpeed(double speed) {
 		super.setSpeed(speed);
+	}
+	
+	public void setWeapon(Weapon w) {
+		weapon = w;
 	}
 	
 	public void takeAction() {

@@ -138,16 +138,26 @@ public class Game extends JFrame {
 				// All Drawables that are Actionables should take action
 				for (int i = 0; i < game.getDrawables().size(); i++) {
 					Drawable d = game.getDrawables().get(i);
-					if(d instanceof Actionable)
+					if (d instanceof Actionable)
 						((Actionable) d).takeAction();
 				}
 				// Redraw everything
-				switch(Constants.DrawingMethod) {
-					case PaintAll: game.paintAll(game.getGraphics()); break;
-					case PaintComponents: game.paintComponents(game.getGraphics()); break;
-					case Repaint: game.repaint(); break;
-					case Update: game.update(game.getGraphics()); break;
-					default: System.out.println("Unknown value for DrawingMethod."); break;
+				switch (Constants.DrawingMethod) {
+					case PaintAll:
+						game.paintAll(game.getGraphics());
+						break;
+					case PaintComponents:
+						game.paintComponents(game.getGraphics());
+						break;
+					case Repaint:
+						game.repaint();
+						break;
+					case Update:
+						game.update(game.getGraphics());
+						break;
+					default:
+						System.out.println("Unknown value for DrawingMethod.");
+						break;
 				}
 				
 				Thread.sleep(60);

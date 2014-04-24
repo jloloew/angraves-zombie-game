@@ -7,9 +7,13 @@
 
 public class Location {
 	
-	private double	x, y;
 	private double	direction;	// In degrees, 0 is north
-								
+	private double	x, y;
+	
+	public Location() {
+		this(0, 0, 0.0);
+	}
+	
 	public Location(int x, int y, double d) {
 		this.x = x;
 		this.y = y;
@@ -28,81 +32,11 @@ public class Location {
 		}
 	}
 	
-	public Location() {
-		this(0, 0, 0.0);
-	}
-	
-	public int getX() {
-		return (int) x;
-	}
-	
-	public double x() {
-		return x;
-	}
-	
-	public int getY() {
-		return (int) y;
-	}
-	
-	public double y() {
-		return y;
-	}
-	
-	public double getDirection() {
-		return direction;
-	}
-	
-	public void setX(double x) {
-		if (0 <= x && x <= Game.GAME_WIDTH)
-			this.x = x;
-	}
-	
-	public void setY(double y) {
-		if (0 <= y && y <= Game.GAME_HEIGHT)
-			this.y = y;
-	}
-	
-	public void setDirection(double direction) {
-		this.direction = direction % 360;
-	}
-	
-	public void move(double dx, double dy) {
-		setX(x + dx);
-		setY(y + dy);
-	}
-	
-	public void move(double distance) {
-		moveToward(this.direction, distance);
-	}
-	
-	public void moveToward(Location loc, double distance) {
-		double radians = Math.toRadians(directionTo(loc));
-		double dx = distance * Math.cos(radians);
-		double dy = distance * Math.sin(radians);
-		move(dx, dy);
-	}
-	
-	public void moveToward(double d, double distance) {
-		double radians = Math.toRadians(d - 90);
-		double dx = distance * Math.cos(radians);
-		double dy = distance * Math.sin(radians);
-		move(dx, dy);
-	}
-	
-	public void turn(double d) {
-		direction = (direction + d) % 360;
-		if (direction < 0)
-			direction += 360;
-	}
-	
-	public void turnTo(double d) {
-		direction = d % 360;
-		if (direction < 0)
-			direction += 360;
-	}
-	
-	public double distanceTo(Location loc) {
-		return Math.sqrt((x - loc.getX()) * (x - loc.getX()) + (y - loc.getY()) * (y - loc.getY()));
+	public double degreesTo(Location loc) {
+		double direc = directionTo(loc) % 360;
+		if (direc < 0)
+			direc += 360;
+		return direc;
 	}
 	
 	public double directionTo(Location loc) {
@@ -119,15 +53,8 @@ public class Location {
 		return degrees;
 	}
 	
-	public double degreesTo(Location loc) {
-		double direc = directionTo(loc) % 360;
-		if (direc < 0)
-			direc += 360;
-		return direc;
-	}
-	
-	public boolean isOutOfBounds() {
-		return x < 0 || y < 0 || x > Game.GAME_WIDTH || y > Game.GAME_HEIGHT;
+	public double distanceTo(Location loc) {
+		return Math.sqrt((x - loc.getX()) * (x - loc.getX()) + (y - loc.getY()) * (y - loc.getY()));
 	}
 	
 	@Override
@@ -137,6 +64,79 @@ public class Location {
 			return loc.x() == this.x && loc.y() == this.y && Math.abs(loc.getDirection() - this.getDirection()) < 1e-9;
 		} else
 			return false;
+	}
+	
+	public double getDirection() {
+		return direction;
+	}
+	
+	public int getX() {
+		return (int) x;
+	}
+	
+	public int getY() {
+		return (int) y;
+	}
+	
+	public boolean isOutOfBounds() {
+		return x < 0 || y < 0 || x > Game.GAME_WIDTH || y > Game.GAME_HEIGHT;
+	}
+	
+	public void move(double distance) {
+		moveToward(this.direction, distance);
+	}
+	
+	public void move(double dx, double dy) {
+		setX(x + dx);
+		setY(y + dy);
+	}
+	
+	public void moveToward(double d, double distance) {
+		double radians = Math.toRadians(d - 90);
+		double dx = distance * Math.cos(radians);
+		double dy = distance * Math.sin(radians);
+		move(dx, dy);
+	}
+	
+	public void moveToward(Location loc, double distance) {
+		double radians = Math.toRadians(directionTo(loc));
+		double dx = distance * Math.cos(radians);
+		double dy = distance * Math.sin(radians);
+		move(dx, dy);
+	}
+	
+	public void setDirection(double direction) {
+		this.direction = direction % 360;
+	}
+	
+	public void setX(double x) {
+		if (0 <= x && x <= Game.GAME_WIDTH)
+			this.x = x;
+	}
+	
+	public void setY(double y) {
+		if (0 <= y && y <= Game.GAME_HEIGHT)
+			this.y = y;
+	}
+	
+	public void turn(double d) {
+		direction = (direction + d) % 360;
+		if (direction < 0)
+			direction += 360;
+	}
+	
+	public void turnTo(double d) {
+		direction = d % 360;
+		if (direction < 0)
+			direction += 360;
+	}
+	
+	public double x() {
+		return x;
+	}
+	
+	public double y() {
+		return y;
 	}
 	
 }// Location class

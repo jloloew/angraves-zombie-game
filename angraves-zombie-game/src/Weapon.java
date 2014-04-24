@@ -8,8 +8,8 @@ public class Weapon extends Drawable {
 	private static final String	IMAGE_NAME		= Constants.Weapon_image_name;
 	
 	private int					ammo			= 500;							// how many more bullets you can shoot
-	private double				rateOfFire		= 2.5;							// bullets per second
 	private double				bulletDamage	= 10;							// damage done by each bullet
+	private double				rateOfFire		= 2.5;							// bullets per second
 	protected Player			player;										// the player holding the weapon
 																				
 	public Weapon(Player player) {
@@ -18,22 +18,13 @@ public class Weapon extends Drawable {
 		this.player = player;
 	}
 	
-	// Return true if we can shoot
-	public Bullet shoot() {
-		if (ammo > 0) {
-			ammo--;
-			return new Bullet(player.getLoc(), bulletDamage);
-		}
-		return null;
-	}
-	
 	public void addAmmo(int howManyMore) {
 		ammo += howManyMore;
 	}
 	
-	// public BufferedImage getImage() {
-	// return image;
-	// }
+	public int getAmmo() {
+		return ammo;
+	}
 	
 	public double getBulletDamage() {
 		return bulletDamage;
@@ -43,8 +34,8 @@ public class Weapon extends Drawable {
 		return rateOfFire;
 	}
 	
-	public int getAmmo() {
-		return ammo;
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
 	}
 	
 	public void setBulletDamage(double damage) {
@@ -55,8 +46,13 @@ public class Weapon extends Drawable {
 		rateOfFire = bulletsPerSecond;
 	}
 	
-	public void setAmmo(int ammo) {
-		this.ammo = ammo;
+	// Return true if we can shoot
+	public Bullet shoot() {
+		if (ammo > 0) {
+			ammo--;
+			return new Bullet(player.getLoc(), bulletDamage);
+		}
+		return null;
 	}
 	
 }
