@@ -20,7 +20,6 @@ public class Bullet extends Drawable implements Actionable {
 	
 	public Bullet(Location location, double damage, String imageFileName) {
 		super(location, imageFileName);
-		System.out.println("Bullet made");
 		imageWidth = 15;
 		imageHeight = 15;
 		super.setWidth(4000);
@@ -29,7 +28,7 @@ public class Bullet extends Drawable implements Actionable {
 		this.description = "Bullet";
 		this.damage = damage;
 		numberOfBullets++;
-		
+		Sound.play(Constants.Bullet_fired_sound_name);
 	}// Bullet
 	
 	@Override

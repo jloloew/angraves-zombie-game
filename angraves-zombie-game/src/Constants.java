@@ -20,6 +20,7 @@ public abstract class Constants {
 	
 	// Zombie
 	public static final double			Zombie_damage_radius	= 5.0;
+	public static final String			Zombie_death_sound_name = "src/Death.wav";
 	public static final String			Zombie_image_name_right	= "ZombieRight.png";
 	public static final String			Zombie_image_name_left	= "ZombieLeft.png";
 	

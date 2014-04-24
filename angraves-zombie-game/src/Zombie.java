@@ -100,7 +100,7 @@ public class Zombie extends Drawable implements Actionable {
 		if (this.loc.distanceTo(target.getLoc()) <= Constants.Zombie_damage_radius) {
 			// TODO: this
 		} else if (this.isDead()) {
-			Sound.play("src/death.wav");
+			Sound.play(Constants.Zombie_death_sound_name);
 			visible = false;
 			game.removeDrawable(this);
 			
