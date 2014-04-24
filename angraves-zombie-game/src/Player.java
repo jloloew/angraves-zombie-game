@@ -7,26 +7,23 @@ public class Player extends Drawable implements Actionable {
 	
 	private static final String	IMAGE_NAME	= Constants.Player_image_name;
 	
-	/*
-	 * From Drawable: Location loc double speed
-	 */
-	private double				health;
+	private double				health		= Constants.Player_default_health;
 	private Weapon				weapon;
 	private boolean				isShooting;
 	
 	public Player() {
-		this(new Location(Game.GAME_WIDTH / 2, Game.GAME_HEIGHT / 2, 0.0));
+		this(new Location(Constants.Game_width / 2, Constants.Game_height / 2, 0.0));
 	}
 	
 	public Player(Location location) {
 		super(location, IMAGE_NAME);
 		super.setWidth(4000);
 		super.setHeight(5000);
-		imageWidth = 45;
-		imageHeight = 60;
+		imageWidth = Constants.Player_width;
+		imageHeight = Constants.Player_height;
 		description = "Player";
-		speed = 10.0;
-		health = 100.0;
+		speed = Constants.Player_speed;
+		health = Constants.Player_default_health;
 		super.isMoving = false;
 		isShooting = false;
 		weapon = new Weapon(this);
@@ -39,25 +36,6 @@ public class Player extends Drawable implements Actionable {
 	public void dealDamage(double healthLost) {
 		health -= healthLost;
 	}
-	
-	// @Override
-	// public void draw(JFrame frame) {
-	// super.draw(frame);
-	// Graphics g = image.getGraphics();
-	// g.drawImage(image, loc.x(), loc.y(), frame);
-	// }
-	
-//	@Override
-//	protected void paintComponent(Graphics g) {
-//		g.drawImage(weapon.getImage(), loc.x() + 3, loc.y() + 3, loc.x() + 3
-//				+ width, loc.y() + 3 + height, 0, 0, weapon.getImage()
-//				.getWidth(), weapon.getImage().getHeight(), game);
-//	}
-	
-//	public void move(int dx, int dy) {
-//		if(isMoving)
-//			super.loc.move(dx, dy);
-//	}
 	
 	public double getHealth() {
 		return health;
@@ -86,9 +64,9 @@ public class Player extends Drawable implements Actionable {
 	public void setSpeed(double speed) {
 		super.setSpeed(speed);
 	}
-
+	
 	public void takeAction() {
-		if(isShooting)
+		if (isShooting)
 			game.addDrawable(weapon.shoot());
 	}
 }

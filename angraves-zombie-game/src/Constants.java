@@ -14,13 +14,17 @@ public abstract class Constants {
 	
 	// Player
 	public static final String			Player_image_name		= "Angrave_Headless.png";
+	public static final int				Player_width			= 45;
+	public static final int				Player_height			= 60;
+	public static final double			Player_speed			= 10.0;
+	public static final double			Player_default_health	= 100.0;
 	
 	// Weapon
 	public static final String			Weapon_image_name		= "Weapon.png";
 	
 	// Zombie
 	public static final double			Zombie_damage_radius	= 5.0;
-	public static final String			Zombie_death_sound_name = "src/Death.wav";
+	public static final String			Zombie_death_sound_name	= "src/Death.wav";
 	public static final String			Zombie_image_name_right	= "ZombieRight.png";
 	public static final String			Zombie_image_name_left	= "ZombieLeft.png";
 	
