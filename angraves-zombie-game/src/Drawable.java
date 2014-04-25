@@ -50,23 +50,20 @@ public abstract class Drawable extends JComponent {
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof Drawable))
 			return false;
-		else {
-			Drawable d = (Drawable) obj;
-			boolean result = true;
-			if (!loc.equals(d.getLoc()))
-				result = false;
-			else if (!(Math.abs(speed - d.getSpeed()) < 1e-9))
-				result = false;
-			else if (points != d.getPoints())
-				result = false;
-			else if (!description.equals(d.getDescription()))
-				result = false;
-			// else if (!image.equals(d.getImage()))
-			// result = false;
-			else if (width != d.getWidth() || height != d.getHeight())
-				result = false;
-			return result;
-		}
+		Drawable d = (Drawable) obj;
+		if (!loc.equals(d.getLoc()))
+			return false;
+		if (!(Math.abs(speed - d.getSpeed()) < 1e-9))
+			return false;
+		if (points != d.getPoints())
+			return false;
+		else if (!description.equals(d.getDescription()))
+			return false;
+		if (!image.equals(d.getImage()))
+			return false;
+		if (width != d.getWidth() || height != d.getHeight())
+			return false;
+		return true;
 	}
 	
 	@Override
