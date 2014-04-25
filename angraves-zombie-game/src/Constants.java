@@ -1,4 +1,7 @@
 public abstract class Constants {
+	
+	public static final double			Epsilon					= 1.0e-9;
+	
 	// Background
 	public static final String			Background_image_name	= "Background.png";
 	

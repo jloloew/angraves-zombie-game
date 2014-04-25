@@ -7,8 +7,8 @@
 
 public class Location {
 	
-	private double	direction;	// In degrees, 0 is north
-	private double	x, y;
+	private double	direction	= 0.0;	// In degrees, 0 is north
+	private double	x			= 0, y = 0;
 	
 	public Location() {
 		this(0, 0, 0.0);
@@ -25,10 +25,6 @@ public class Location {
 			this.x = loc.x();
 			this.y = loc.y();
 			this.direction = loc.getDirection();
-		} else {
-			this.x = 0;
-			this.y = 0;
-			this.direction = 0.0;
 		}
 	}
 	
@@ -41,8 +37,8 @@ public class Location {
 	
 	public double directionTo(Location loc) {
 		// Avoid division by 0
-		if (loc.getX() - x <= 1e-12 && loc.getX() - x > 0)
-			return loc.getY() - y > 0 ? 180.0 : 0.0;
+		if (loc.x() - x <= Constants.Epsilon && loc.x() - x > 0)
+			return loc.getY() > this.y ? 180.0 : 0.0;
 		double dx = loc.getX() - x;
 		double dy = loc.getY() - y;
 		double radians = Math.atan(1.0 * dy / dx);
@@ -54,16 +50,15 @@ public class Location {
 	}
 	
 	public double distanceTo(Location loc) {
-		return Math.sqrt((x - loc.getX()) * (x - loc.getX()) + (y - loc.getY()) * (y - loc.getY()));
+		return Math.sqrt((this.x - loc.x()) * (this.x - loc.x()) + (this.y - loc.y()) * (this.y - loc.y()));
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Location) {
-			Location loc = (Location) obj;
-			return loc.x() == this.x && loc.y() == this.y && Math.abs(loc.getDirection() - this.getDirection()) < 1e-9;
-		} else
+		if (obj == null || !(obj instanceof Location))
 			return false;
+		Location loc = (Location) obj;
+		return loc.x() == this.x && loc.y() == this.y && Math.abs(loc.getDirection() - this.getDirection()) < 1e-9;
 	}
 	
 	public double getDirection() {
@@ -91,8 +86,9 @@ public class Location {
 		setY(y + dy);
 	}
 	
-	public void moveToward(double d, double distance) {
-		double radians = Math.toRadians(d - 90);
+	public void moveToward(double degrees, double distance) {
+		double radians = Math.toRadians(degrees - 90);	// Math says 0 is on the X-axis, but North says 0 is on the
+														// Y-axis.
 		double dx = distance * Math.cos(radians);
 		double dy = distance * Math.sin(radians);
 		move(dx, dy);
@@ -112,21 +108,25 @@ public class Location {
 	public void setX(double x) {
 		if (0 <= x && x <= Game.GAME_WIDTH)
 			this.x = x;
+		else if (Constants.Debug)
+			System.out.println("Location: setX: value " + x + " is out of range.");
 	}
 	
 	public void setY(double y) {
 		if (0 <= y && y <= Game.GAME_HEIGHT)
 			this.y = y;
+		else if (Constants.Debug)
+			System.out.println("Location: setY: value " + y + " is out of range.");
 	}
 	
-	public void turn(double d) {
-		direction = (direction + d) % 360;
+	public void turn(double degrees) {
+		direction = (direction + degrees) % 360;
 		if (direction < 0)
 			direction += 360;
 	}
 	
-	public void turnTo(double d) {
-		direction = d % 360;
+	public void turnTo(double degrees) {
+		direction = degrees % 360;
 		if (direction < 0)
 			direction += 360;
 	}
@@ -139,4 +139,4 @@ public class Location {
 		return y;
 	}
 	
-}// Location class
+}

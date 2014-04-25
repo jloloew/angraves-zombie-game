@@ -84,6 +84,14 @@ public abstract class Drawable extends JComponent {
 		return image;
 	}
 	
+	public int getImageHeight() {
+		return imageHeight;
+	}
+	
+	public int getImageWidth() {
+		return imageWidth;
+	}
+	
 	public boolean getIsMoving() {
 		return isMoving;
 	}
@@ -112,9 +120,19 @@ public abstract class Drawable extends JComponent {
 		return loc.getY();
 	}
 	
+	public boolean isVisible() {
+		return visible;
+	}
+	
 	public void move() {
-		if (isMoving)
+		if (isMoving) {
+			Location original = new Location(loc);
 			loc.move(speed);
+			// Make sure we're not off the screen
+			if (loc.x() < 0 || loc.x() > Game.GAME_WIDTH - imageWidth || loc.y() < 0
+					|| loc.y() > Game.GAME_HEIGHT - imageHeight)
+				loc = original;
+		}
 	}
 	
 	public void setDescription(String s) {
@@ -150,6 +168,10 @@ public abstract class Drawable extends JComponent {
 		this.speed = speed;
 	}
 	
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+	
 	public void setWidth(int width) {
 		this.width = width;
 		super.setSize(this.width, this.height);
@@ -158,11 +180,11 @@ public abstract class Drawable extends JComponent {
 	public void setX(int x) {
 		loc.setX(x);
 	}
-	
+
 	public void setY(int y) {
 		loc.setY(y);
 	}
-	
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (visible) {
@@ -170,11 +192,11 @@ public abstract class Drawable extends JComponent {
 			g.drawImage(image, loc.getX(), loc.getY(), game);
 		}
 	}
-	
+
 	public static Game getGame() {
 		return game;
 	}
-	
+
 	public static void setGame(Game g) {
 		game = g;
 	}
