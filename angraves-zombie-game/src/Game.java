@@ -86,11 +86,30 @@ public class Game extends JFrame {
 		super.setVisible(true);
 		this.drawables = new ArrayList<Drawable>();
 		
+		// Add 1x1 backgrounds in order to be able to set the Z-Order for the background now.
+		Drawable d0 = new Background();
+		d0.setWidth(0);
+		d0.setHeight(0);
+		super.add(d0);
+		super.setComponentZOrder(d0, Constants.Bullet_z_order);
+		Drawable d1 = new Background();
+		d1.setWidth(0);
+		d1.setHeight(0);
+		super.add(d1);
+		super.setComponentZOrder(d1, Constants.Zombie_z_order);
+		Drawable d2 = new Background();
+		d2.setWidth(0);
+		d2.setHeight(0);
+		super.add(d2);
+		super.setComponentZOrder(d2, Constants.Weapon_z_order);
+		
 		// Add the first player
 		this.player1 = new Player(new Location(GAME_WIDTH / 2, GAME_HEIGHT / 2, 0.0));
+		// Can't do this in the Player constructor because the Player's game isn't done being constructed yet!
+		addDrawable(this.player1.getWeapon());
 		super.add(this.player1);
 		this.drawables.add(this.player1);
-		super.setComponentZOrder(player1, 0);
+		super.setComponentZOrder(player1, Constants.Player_z_order);
 		
 		// Draw the background image
 		if (!BACKGROUND_HIDDEN) {
@@ -98,7 +117,7 @@ public class Game extends JFrame {
 			background.setWidth(GAME_WIDTH);
 			background.setHeight(GAME_HEIGHT);
 			super.add(background);
-			super.setComponentZOrder(background, 1);
+			super.setComponentZOrder(background, Constants.Background_z_order);
 		}
 		
 		this.bullets = new ArrayList<>();
@@ -180,12 +199,18 @@ public class Game extends JFrame {
 		if (d == null)
 			return;
 		super.add(d);
-		super.setComponentZOrder(d, 1);
-		drawables.add(d);
-		if (d instanceof Zombie)
+		if (d instanceof Zombie) {
+			super.setComponentZOrder(d, Constants.Zombie_z_order);
 			zombies.add((Zombie) d);
-		if (d instanceof Bullet)
+		} else if (d instanceof Bullet) {
+			super.setComponentZOrder(d, Constants.Bullet_z_order);
 			bullets.add((Bullet) d);
+		} else if (d instanceof Weapon) {
+			super.setComponentZOrder(d, Constants.Weapon_z_order);
+		} else if (d instanceof Background) {
+			super.setComponentZOrder(d, Constants.Background_z_order);
+		}
+		drawables.add(d);
 	}
 	
 	public void removeDrawable(Drawable d) {
