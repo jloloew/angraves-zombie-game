@@ -38,18 +38,6 @@ public class Bullet extends Drawable implements Actionable {
 		super.finalize();
 	}
 	
-	public void moveBullet() {
-		if (isMoving) {
-			loc.setDirection(loc.directionTo(getLoc()));
-			super.move();
-			if (getLoc().getX() > this.loc.getX()) {
-				this.setImage(IMAGE_NAME);
-			} else {
-				setImage(IMAGE_NAME);
-			}
-		}
-	}
-	
 	public void takeAction() {
 		ArrayList<Zombie> zombies = game.getZombies();
 		for (int i = 0; i < zombies.size(); i++) {

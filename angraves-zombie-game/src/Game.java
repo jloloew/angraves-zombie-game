@@ -14,19 +14,17 @@ import javax.swing.JFrame;
 @SuppressWarnings("serial")
 public class Game extends JFrame {
 	
-	public static boolean		BACKGROUND_HIDDEN	= false;
+	public static boolean		debug		= true;
 	
-	public static boolean		debug				= true;
-	
-	public static int			GAME_WIDTH			= Constants.Game_width;
-	public static int			GAME_HEIGHT			= Constants.Game_height;
+	public static int			GAME_WIDTH	= Constants.Game_width;
+	public static int			GAME_HEIGHT	= Constants.Game_height;
 	
 	private Drawable			background;
 	private Player				player1;
 	private ArrayList<Drawable>	drawables;
 	private ArrayList<Bullet>	bullets;
 	private ArrayList<Zombie>	zombies;
-	private int					score				= 0;
+	private int					score		= 0;
 	private boolean				isPaused;
 	private boolean				shouldDisplayHelp;
 	
@@ -112,13 +110,11 @@ public class Game extends JFrame {
 		super.setComponentZOrder(player1, Constants.Player_z_order);
 		
 		// Draw the background image
-		if (!BACKGROUND_HIDDEN) {
-			background = new Background();
-			background.setWidth(GAME_WIDTH);
-			background.setHeight(GAME_HEIGHT);
-			super.add(background);
-			super.setComponentZOrder(background, Constants.Background_z_order);
-		}
+		background = new Background();
+		background.setWidth(GAME_WIDTH);
+		background.setHeight(GAME_HEIGHT);
+		super.add(background);
+		super.setComponentZOrder(background, Constants.Background_z_order);
 		
 		this.bullets = new ArrayList<>();
 		this.zombies = new ArrayList<>();

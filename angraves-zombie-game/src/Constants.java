@@ -1,5 +1,8 @@
 public abstract class Constants {
-	
+
+	// Other stuff
+	public static final boolean			Debug					= true;
+	public static final DrawingMethods	DrawingMethod			= DrawingMethods.PaintComponents;
 	public static final double			Epsilon					= 1.0e-9;
 	
 	// Background
@@ -39,10 +42,6 @@ public abstract class Constants {
 	// Game
 	public static final int				Game_width				= 800;
 	public static final int				Game_height				= 600;
-	
-	// Other stuff
-	public static final boolean			Debug					= true;
-	public static final DrawingMethods	DrawingMethod			= DrawingMethods.PaintComponents;
 	
 	public enum DrawingMethods {
 		PaintAll, PaintComponents, Repaint, Update
