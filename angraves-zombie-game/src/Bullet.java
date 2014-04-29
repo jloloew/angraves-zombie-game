@@ -21,6 +21,7 @@ public class Bullet extends Drawable implements Actionable {
 		super(location, imageFileName);
 		imageWidth = Constants.Bullet_width;
 		imageHeight = Constants.Bullet_height;
+		isMoving = true;
 		super.setWidth(5000);
 		super.setHeight(5000);
 		super.points = Constants.Bullet_points;
@@ -35,6 +36,18 @@ public class Bullet extends Drawable implements Actionable {
 	public void finalize() throws Throwable {
 		numberOfBullets--;
 		super.finalize();
+	}
+	
+	public void moveBullet() {
+		if (isMoving) {
+			loc.setDirection(loc.directionTo(getLoc()));
+			super.move();
+			if (getLoc().getX() > this.loc.getX()) {
+				this.setImage(IMAGE_NAME);
+			} else {
+				setImage(IMAGE_NAME);
+			}
+		}
 	}
 	
 	public void takeAction() {
