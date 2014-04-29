@@ -1,5 +1,3 @@
-import java.awt.Graphics;
-
 /**
  * @author jloew2
  */
@@ -19,7 +17,7 @@ public class Weapon extends Drawable {
 		loc = player.getLoc();
 		this.player = player;
 		imageWidth = 60;
-		imageHeight = 52;
+		imageHeight = 80;
 		super.setWidth(5000);
 		super.setHeight(5000);
 	}
@@ -59,14 +57,6 @@ public class Weapon extends Drawable {
 			return new Bullet(player.getLoc(), bulletDamage);
 		}
 		return null;
-	}
-
-	@Override
-	protected void paintComponent(Graphics g) {
-		if (visible) {
-			super.paintComponent(g);
-			g.drawImage(image, loc.getX(), loc.getY() + 20, game);	// Draw the gun below Angrave's head
-		}
 	}
 	
 }

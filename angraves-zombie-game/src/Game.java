@@ -147,6 +147,7 @@ public class Game extends JFrame {
 			// Continue with the normal run loop
 			else {
 				// Move all Drawables
+//				game.player1.setIsShooting(true);
 				for (int i = 0; i < game.getDrawables().size(); i++) {
 					Drawable dbl = game.getDrawables().get(i);
 					dbl.move();
@@ -176,7 +177,7 @@ public class Game extends JFrame {
 						break;
 				}
 				
-				Thread.sleep(60);
+				Thread.sleep(50);
 			}// if/else for paused/help
 		}// while
 	}// main
