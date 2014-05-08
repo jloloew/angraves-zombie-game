@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * @author jloew2
  */
@@ -65,8 +67,24 @@ public class Player extends Drawable implements Actionable {
 		weapon = w;
 	}
 	
+	public boolean isDead() {
+		return health <= 0;
+	}
+	
 	public void takeAction() {
 		if (isShooting)
 			game.addDrawable(weapon.shoot());
+		ArrayList<Zombie> zombies = game.getZombies();
+		for (int i = 0; i < zombies.size(); i++) {
+			Zombie z = zombies.get(i);
+			if (loc.distanceTo(z.getLoc()) <= Constants.Zombie_damage_radius) {
+				dealDamage(5.0);
+			} else if (this.isDead()) {
+				Sound.play(Constants.Zombie_death_sound_name);
+				visible = false;
+				game.removeDrawable(this);
+				
+			}
+		}
 	}
 }
