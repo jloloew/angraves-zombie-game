@@ -15,7 +15,7 @@ public abstract class Constants {
 	public static final int				Bullet_width			= 15;
 	public static final int				Bullet_height			= 15;
 	public static final int				Bullet_points			= 10;
-	public static final double			Bullet_speed			= 10.0;
+	public static final double			Bullet_speed			= 20.0;
 	public static final double			Bullet_damage			= 10.0;
 	public static final double			Bullet_hit_radius		= 3.0;
 	public static final int				Bullet_z_order			= 0;

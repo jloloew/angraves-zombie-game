@@ -39,11 +39,16 @@ public class Bullet extends Drawable implements Actionable {
 	}
 	
 	public void takeAction() {
+		if (loc.getX() < 40 || loc.getX() > 760 || loc.getY() > 500) {
+			visible = false;
+			game.removeDrawable(this);
+		}
 		ArrayList<Zombie> zombies = game.getZombies();
 		for (int i = 0; i < zombies.size(); i++) {
 			Zombie z = zombies.get(i);
 			if (loc.distanceTo(z.getLoc()) <= hitRadius) {
 				z.dealDamage(damage);
+				visible = false;
 				game.removeDrawable(this);
 			}
 		}
