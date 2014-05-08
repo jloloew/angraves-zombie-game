@@ -129,7 +129,7 @@ public class Game extends JFrame {
 		Drawable.setGame(game);
 		game.setShouldDisplayHelp(false);
 		game.setPaused(false);	// TODO: remove this line
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 10; i++) {
 			game.addDrawable(new Zombie(game.player1));
 		}
 		boolean gameIsRunning = true;
